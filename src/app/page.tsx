@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { easeOut, motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
@@ -11,7 +11,10 @@ const fadeInUp = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: 'easeOut' },
+    transition: {
+      duration: 0.8,
+      ease: easeOut,
+    },
   },
 };
 

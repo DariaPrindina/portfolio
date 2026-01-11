@@ -16,12 +16,12 @@ ENV PORT=3000
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder --chown=nextjs:nodejs /app/next.config.* ./
-COPY --from=builder --chown=nextjs:nodejs /app/package*.json ./
+# Копируем только standalone в корень
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./standalone/.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/public ./standalone/public
+# Важно: копируем static и public В КОРЕНЬ (не в standalone/)
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 USER nextjs
 

@@ -31,7 +31,7 @@ export default function Home() {
         >
           <div className="relative mx-auto mb-6 h-40 w-40 overflow-hidden rounded-full border-4 border-primary/30 shadow-xl">
             <Image
-              src="/images/avatar.png"
+              src="/images/avatar.jpg"
               alt="Daria Prindina"
               fill
               className="object-cover"

@@ -17,11 +17,11 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder --chown=nextjs:nodejs /app/next.config.* ./
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/package*.json ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/.next/cache ./.next/cache
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./standalone/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./standalone/public
 
 USER nextjs
 

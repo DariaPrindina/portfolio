@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from 'next-themes';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -19,7 +17,20 @@ export const metadata: Metadata = {
   title: 'Daria Prindina | Frontend Developer',
   description: 'Frontend Developer specializing in React, Next.js, TypeScript',
   openGraph: {
-    images: '/images/og-image.jpg', // добавь позже
+    title: 'Daria Prindina | Frontend Developer',
+    description:
+      'Frontend Developer specializing in React, Next.js, TypeScript',
+    siteName: 'Daria Prindina | Frontend Developer',
+    images: [],
+  },
+  icons: {
+    icon: [
+      { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
+      { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
+
+      // Фоллбек для старых браузеров (без media)
+      { url: '/favicon.ico', rel: 'shortcut icon' },
+    ],
   },
 };
 

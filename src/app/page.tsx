@@ -1,7 +1,6 @@
 'use client';
 
 import { easeOut, motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -68,16 +67,16 @@ export default function Home() {
           variants={fadeInUp}
           className="flex flex-wrap justify-center gap-4"
         >
-          <Button asChild size="lg" className="gap-2">
+          <button>
             <Link href="#projects">
               Посмотреть проекты
               <ArrowRight className="h-5 w-5" />
             </Link>
-          </Button>
+          </button>
 
-          <Button variant="outline" size="lg" asChild>
+          <button>
             <Link href="#contact">Связаться со мной</Link>
-          </Button>
+          </button>
         </motion.div>
 
         {/* Социальные иконки */}

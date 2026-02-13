@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './globals.css';
 import { ThemeProvider } from 'next-themes';
+import './globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  subsets: ['latin'],
+  subsets: ['latin', 'cyrillic'],
 });
 
 const geistMono = Geist_Mono({
@@ -14,24 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Daria Prindina | Frontend Developer',
-  description: 'Frontend Developer specializing in React, Next.js, TypeScript',
-  openGraph: {
-    title: 'Daria Prindina | Frontend Developer',
-    description:
-      'Frontend Developer specializing in React, Next.js, TypeScript',
-    siteName: 'Daria Prindina | Frontend Developer',
-    images: [],
-  },
-  icons: {
-    icon: [
-      { url: '/favicon-light.ico', media: '(prefers-color-scheme: light)' },
-      { url: '/favicon-dark.ico', media: '(prefers-color-scheme: dark)' },
-
-      // Фоллбек для старых браузеров (без media)
-      { url: '/favicon.ico', rel: 'shortcut icon' },
-    ],
-  },
+  title: 'Дарья Приндина | Frontend-разработчик',
+  description:
+    'Портфолио frontend-разработчика: React, Next.js, TypeScript, доступные и быстрые интерфейсы.',
 };
 
 export default function RootLayout({
@@ -40,19 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} text-foreground antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="relative flex min-h-screen flex-col">
-            <main className="flex-1">{children}</main>
-          </div>
+    <html lang="ru" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
         </ThemeProvider>
       </body>
     </html>

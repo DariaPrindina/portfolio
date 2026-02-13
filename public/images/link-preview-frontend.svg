@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Frontend Portfolio Preview</title>
+  <desc id="desc">Frontend-themed social preview image with code window and UI elements.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1328" />
+      <stop offset="55%" stop-color="#152a52" />
+      <stop offset="100%" stop-color="#1b3e73" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#52b6ff" />
+      <stop offset="100%" stop-color="#7b8cff" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="1050" cy="70" r="210" fill="#5ea1ff" opacity="0.18" />
+  <circle cx="120" cy="560" r="240" fill="#4fe3ff" opacity="0.14" />
+
+  <rect x="78" y="78" width="1044" height="474" rx="24" fill="#0a1020" opacity="0.92" stroke="#395d93" />
+  <rect x="78" y="78" width="1044" height="54" rx="24" fill="#0d1730" />
+  <circle cx="122" cy="105" r="8" fill="#ff6b6b" />
+  <circle cx="148" cy="105" r="8" fill="#ffd166" />
+  <circle cx="174" cy="105" r="8" fill="#4ade80" />
+
+  <rect x="118" y="170" width="472" height="340" rx="16" fill="#101d39" stroke="#294979" />
+  <text x="144" y="214" fill="#8ebdff" font-size="24" font-family="monospace">&lt;Frontend /&gt;</text>
+  <text x="144" y="256" fill="#d9e9ff" font-size="21" font-family="monospace">React • TypeScript • Next.js</text>
+  <text x="144" y="298" fill="#9ac5ff" font-size="19" font-family="monospace">const project = "CRM Migration";</text>
+  <text x="144" y="336" fill="#9ac5ff" font-size="19" font-family="monospace">const stack = ["React Query",</text>
+  <text x="144" y="366" fill="#9ac5ff" font-size="19" font-family="monospace">"Zustand"];</text>
+  <text x="144" y="396" fill="#9ac5ff" font-size="19" font-family="monospace">const result = "Scalable UI";</text>
+
+  <rect x="646" y="170" width="436" height="154" rx="16" fill="#10203e" stroke="#2b4d82" />
+  <rect x="646" y="350" width="208" height="160" rx="16" fill="#10203e" stroke="#2b4d82" />
+  <rect x="874" y="350" width="208" height="160" rx="16" fill="#10203e" stroke="#2b4d82" />
+
+  <rect x="680" y="204" width="368" height="16" rx="8" fill="#2c4f85" />
+  <rect x="680" y="234" width="300" height="16" rx="8" fill="#2c4f85" />
+  <rect x="680" y="264" width="336" height="16" rx="8" fill="#2c4f85" />
+
+  <rect x="674" y="380" width="150" height="20" rx="10" fill="url(#accent)" />
+  <rect x="674" y="416" width="122" height="14" rx="7" fill="#355f9b" />
+  <rect x="674" y="444" width="136" height="14" rx="7" fill="#355f9b" />
+
+  <rect x="902" y="380" width="150" height="20" rx="10" fill="url(#accent)" />
+  <rect x="902" y="416" width="122" height="14" rx="7" fill="#355f9b" />
+  <rect x="902" y="444" width="136" height="14" rx="7" fill="#355f9b" />
+
+  <text x="92" y="600" fill="#b8d8ff" font-size="26" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial">Daria Prindina — Frontend Developer</text>
+</svg>

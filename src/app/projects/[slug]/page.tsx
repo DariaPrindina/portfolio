@@ -31,11 +31,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${project.title} | Проект`,
       description: project.description,
       type: 'article',
+      images: [
+        {
+          url: '/images/link-preview-frontend.svg',
+          width: 1200,
+          height: 630,
+          alt: 'Frontend Portfolio Preview',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${project.title} | Проект`,
       description: project.description,
+      images: ['/images/link-preview-frontend.svg'],
     },
   };
 }

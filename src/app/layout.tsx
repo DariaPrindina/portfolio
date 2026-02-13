@@ -47,10 +47,10 @@ export const metadata: Metadata = {
     siteName: 'Daria Prindina Portfolio',
     images: [
       {
-        url: '/images/avatar.jpg',
+        url: '/images/link-preview-frontend.svg',
         width: 1200,
         height: 630,
-        alt: 'Дарья Приндина — Frontend Developer',
+        alt: 'Frontend Portfolio Preview',
       },
     ],
   },
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     title: 'Дарья Приндина | Frontend-разработчик',
     description:
       'Портфолио frontend-разработчика: React, Next.js, TypeScript, доступные и быстрые интерфейсы.',
-    images: ['/images/avatar.jpg'],
+    images: ['/images/link-preview-frontend.svg'],
   },
   robots: {
     index: true,

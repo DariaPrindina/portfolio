@@ -28,12 +28,21 @@ export const metadata: Metadata = {
     description:
       'Frontend-разработчик: React, Next.js, TypeScript. Кейсы миграции с JavaScript на React и развитие CRM-продуктов.',
     url: '/',
+    images: [
+      {
+        url: '/images/link-preview-frontend.svg',
+        width: 1200,
+        height: 630,
+        alt: 'Frontend Portfolio Preview',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Дарья Приндина | Frontend-разработчик',
     description:
       'Frontend-разработчик: React, Next.js, TypeScript. Кейсы миграции с JavaScript на React и развитие CRM-продуктов.',
+    images: ['/images/link-preview-frontend.svg'],
   },
 };
 

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { projects } from '@/data/projects';
+import { projects } from '@/entities/project/model/projects';
 
 const currentProject = projects.find((project) => project.isCurrent && project.caseStudy);
 

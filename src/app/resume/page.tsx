@@ -1,7 +1,25 @@
+import type { Metadata } from 'next';
 import { Download, Eye } from 'lucide-react';
 import Link from 'next/link';
-import MotionEffects from '@/components/MotionEffects';
-import { resumeDocs } from '@/data/documents';
+import MotionEffects from '@/shared/ui/motion/MotionEffects';
+import { resumeDocs } from '@/entities/document/model/documents';
+import { buildPageMetadata } from '@/shared/lib/seo';
+
+export const metadata: Metadata = {
+  ...buildPageMetadata({
+    title: 'Резюме | Дарья Приндина',
+    description: 'Страница резюме: просмотр и скачивание PDF/Word.',
+    url: '/resume',
+    imageAlt: 'Резюме Дарьи Приндиной',
+  }),
+  alternates: {
+    canonical: '/resume',
+    languages: {
+      ru: '/resume',
+      en: '/en/resume',
+    },
+  },
+};
 
 export default function ResumePage() {
   return (

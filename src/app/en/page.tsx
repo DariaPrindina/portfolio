@@ -1,10 +1,13 @@
 import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
-import { ArrowRight, Download, ExternalLink, Eye, Github, Mail, Send } from 'lucide-react';
+import { ArrowRight, Download, Eye, Github, Mail, Send } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import MotionEffects from '@/components/MotionEffects';
-import { certificateDocs } from '@/data/documents';
+import MotionEffects from '@/shared/ui/motion/MotionEffects';
+import ExperienceList from '@/shared/ui/lists/ExperienceList';
+import ProjectsGrid from '@/shared/ui/lists/ProjectsGrid';
+import SkillsList from '@/shared/ui/lists/SkillsList';
+import { certificateDocs } from '@/entities/document/model/documents';
 import {
   enAbout,
   enCertificates,
@@ -13,40 +16,24 @@ import {
   enProfile,
   enProjects,
   enSkills,
-} from '@/data/en';
+} from '@/entities/locale/model/en';
+import { buildPageMetadata } from '@/shared/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Daria Prindina | Frontend Developer',
-  description:
-    'Frontend Developer portfolio: React, Next.js, TypeScript, CRM migration case studies and product development.',
+  ...buildPageMetadata({
+    title: 'Daria Prindina | Frontend Developer',
+    description:
+      'Frontend Developer portfolio: React, Next.js, TypeScript, CRM migration case studies and product development.',
+    url: '/en',
+    locale: 'en_US',
+    imageAlt: 'Daria Prindina — Frontend Developer',
+  }),
   alternates: {
     canonical: '/en',
     languages: {
       ru: '/',
       en: '/en',
     },
-  },
-  openGraph: {
-    title: 'Daria Prindina | Frontend Developer',
-    description:
-      'Frontend Developer portfolio: React, Next.js, TypeScript, CRM migration case studies and product development.',
-    url: '/en',
-    locale: 'en_US',
-    images: [
-      {
-        url: '/images/avatar.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Daria Prindina — Frontend Developer',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Daria Prindina | Frontend Developer',
-    description:
-      'Frontend Developer portfolio: React, Next.js, TypeScript, CRM migration case studies and product development.',
-    images: ['/images/avatar.jpg'],
   },
 };
 
@@ -155,63 +142,14 @@ export default function EnPage() {
           <h2 className="section__title" data-reveal="up">
             Skills
           </h2>
-          <ul className="chip-list" aria-label="Skills list">
-            {enSkills.map((skill, index) => (
-              <li
-                key={skill.name}
-                className="chip-list__item"
-                data-reveal="up"
-                style={{ '--reveal-delay': `${index * 50}ms` } as CSSProperties}
-              >
-                <Image
-                  src={skill.logo}
-                  alt={`${skill.name} logo`}
-                  className="chip-list__logo"
-                  width={18}
-                  height={18}
-                  sizes="18px"
-                  unoptimized
-                />
-                <span>{skill.name}</span>
-              </li>
-            ))}
-          </ul>
+          <SkillsList skills={enSkills} ariaLabel="Skills list" />
         </section>
 
         <section id="experience" className="section" data-reveal="up">
           <h2 className="section__title" data-reveal="up">
             Experience
           </h2>
-          <div className="experience-list">
-            {enExperience.map((item, index) => (
-              <article
-                key={`${item.company}-${item.period}`}
-                className="experience-card"
-                data-reveal="up"
-                style={{ '--reveal-delay': `${index * 90}ms` } as CSSProperties}
-              >
-                <header className="experience-card__header">
-                  <div>
-                    <h3 className="experience-card__company">{item.company}</h3>
-                    <p className="experience-card__role">{item.role}</p>
-                  </div>
-                  <p className="experience-card__period">{item.period}</p>
-                </header>
-
-                <p className="experience-card__summary">{item.summary}</p>
-                <ul className="experience-card__bullets">
-                  {item.bullets.map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
-                  ))}
-                </ul>
-                <ul className="experience-card__stack" aria-label={`Stack ${item.company}`}>
-                  {item.stack.map((tech) => (
-                    <li key={tech}>{tech}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
+          <ExperienceList items={enExperience} stackLabelPrefix="Stack" />
         </section>
 
         <section id="education" className="section" data-reveal="up">
@@ -261,64 +199,15 @@ export default function EnPage() {
           <h2 className="section__title" data-reveal="up">
             Projects
           </h2>
-          <div className="project-grid">
-            {enProjects.map((project, index) => (
-              <article
-                key={project.title}
-                className={`project-card ${project.isCurrent ? 'project-card--current' : ''}`}
-                data-reveal="up"
-                style={{ '--reveal-delay': `${index * 90}ms` } as CSSProperties}
-              >
-                <div className="project-card__head">
-                  <h3 className="project-card__title">{project.title}</h3>
-                  {project.isCurrent ? <span className="project-card__badge">Current project</span> : null}
-                </div>
-                <p className="project-card__description">{project.description}</p>
-
-                <ul className="project-card__stack" aria-label={`Stack ${project.title}`}>
-                  {project.stack.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-
-                {project.highlights?.length ? (
-                  <ul className="project-card__highlights">
-                    {project.highlights.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                ) : null}
-
-                <div className="project-card__actions">
-                  <Link href={`/projects/${project.slug}`} className="project-action-link project-action-link--primary">
-                    Case study
-                  </Link>
-                  {project.liveUrl ? (
-                    <Link
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-action-link project-action-link--secondary"
-                    >
-                      <ExternalLink size={15} aria-hidden="true" />
-                      Demo
-                    </Link>
-                  ) : null}
-                  {project.repoUrl ? (
-                    <Link
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-action-link project-action-link--secondary"
-                    >
-                      <Github size={15} aria-hidden="true" />
-                      Code
-                    </Link>
-                  ) : null}
-                </div>
-              </article>
-            ))}
-          </div>
+          <ProjectsGrid
+            projects={enProjects}
+            labels={{
+              currentProject: 'Current project',
+              details: 'Case study',
+              demo: 'Demo',
+              code: 'Code',
+            }}
+          />
         </section>
 
         <section id="resume" className="section" data-reveal="up">

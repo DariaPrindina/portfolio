@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Download, Eye } from 'lucide-react';
 import Link from 'next/link';
-import { certificates, education } from '@/data/education';
+import { certificates, education } from '@/entities/education/model/education';
 
 export default function Education() {
   return (

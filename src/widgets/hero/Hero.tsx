@@ -1,7 +1,7 @@
 import { ArrowRight, Github, Linkedin, Mail, Send } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { profile } from '@/data/profile';
+import { profile } from '@/entities/profile/model/profile';
 
 export default function Hero() {
   return (

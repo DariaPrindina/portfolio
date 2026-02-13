@@ -1,7 +1,26 @@
+import type { Metadata } from 'next';
 import { Download, Eye } from 'lucide-react';
 import Link from 'next/link';
 import MotionEffects from '@/shared/ui/motion/MotionEffects';
 import { resumeDocs } from '@/entities/document/model/documents';
+import { buildPageMetadata } from '@/shared/lib/seo';
+
+export const metadata: Metadata = {
+  ...buildPageMetadata({
+    title: 'Resume | Daria Prindina',
+    description: 'Resume page: online view and PDF/Word download.',
+    url: '/en/resume',
+    locale: 'en_US',
+    imageAlt: 'Daria Prindina Resume',
+  }),
+  alternates: {
+    canonical: '/en/resume',
+    languages: {
+      ru: '/resume',
+      en: '/en/resume',
+    },
+  },
+};
 
 export default function EnResumePage() {
   return (

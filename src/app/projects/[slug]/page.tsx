@@ -34,6 +34,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     ...baseMeta,
+    alternates: {
+      canonical: `/projects/${project.slug}`,
+      languages: {
+        ru: `/projects/${project.slug}`,
+        en: '/en#projects',
+      },
+    },
     openGraph: {
       ...baseMeta.openGraph,
       type: 'article',

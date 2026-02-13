@@ -22,13 +22,7 @@ function runThemeSwitchAnimation() {
 }
 
 export default function VisualThemeToggle() {
-  const isClient = typeof window !== 'undefined';
-  const [theme, setTheme] = useState<VisualTheme>(() => {
-    if (!isClient) {
-      return 'classic';
-    }
-    return localStorage.getItem(STORAGE_KEY) === 'cosmic' ? 'cosmic' : 'classic';
-  });
+  const [theme, setTheme] = useState<VisualTheme>('classic');
 
   useEffect(() => {
     applyVisualTheme(theme);
@@ -40,10 +34,6 @@ export default function VisualThemeToggle() {
     const nextTheme: VisualTheme = theme === 'cosmic' ? 'classic' : 'cosmic';
     setTheme(nextTheme);
   };
-
-  if (!isClient) {
-    return null;
-  }
 
   return (
     <button

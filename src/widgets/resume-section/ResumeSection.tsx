@@ -1,6 +1,6 @@
 import { Download, Eye } from 'lucide-react';
 import Link from 'next/link';
-import { resumeDocs } from '@/data/documents';
+import { resumeDocs } from '@/entities/document/model/documents';
 
 export default function ResumeSection() {
   return (

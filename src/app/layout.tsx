@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
-import VisualLanguageToggle from '@/components/VisualLanguageToggle';
-import VisualThemeToggle from '@/components/VisualThemeToggle';
+import VisualLanguageToggle from '@/shared/ui/toggles/VisualLanguageToggle';
+import VisualThemeToggle from '@/shared/ui/toggles/VisualThemeToggle';
+import { OG_IMAGE, SITE_URL } from '@/shared/config/site';
 import './globals.css';
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dariaprindina.dev';
 
 const geistSans = Inter({
   variable: '--font-geist-sans',
@@ -18,7 +17,7 @@ const geistMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: 'Дарья Приндина | Frontend-разработчик',
   description:
     'Портфолио frontend-разработчика: React, Next.js, TypeScript, доступные и быстрые интерфейсы.',
@@ -47,7 +46,7 @@ export const metadata: Metadata = {
     siteName: 'Daria Prindina Portfolio',
     images: [
       {
-        url: '/images/avatar.jpg',
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
         alt: 'Дарья Приндина — Frontend Developer',
@@ -59,7 +58,7 @@ export const metadata: Metadata = {
     title: 'Дарья Приндина | Frontend-разработчик',
     description:
       'Портфолио frontend-разработчика: React, Next.js, TypeScript, доступные и быстрые интерфейсы.',
-    images: ['/images/avatar.jpg'],
+    images: [OG_IMAGE],
   },
   robots: {
     index: true,
@@ -96,7 +95,7 @@ export default function RootLayout({
         '@type': 'Person',
         name: 'Дарья Приндина',
         jobTitle: 'Frontend Developer',
-        url: siteUrl,
+        url: SITE_URL,
         email: 'mailto:00dariaprindina00@gmail.com',
         sameAs: ['https://github.com/DariaPrindina', 'https://t.me/darht_vadr'],
         knowsAbout: ['React', 'TypeScript', 'Next.js', 'Frontend Architecture', 'CRM'],
@@ -104,7 +103,7 @@ export default function RootLayout({
       {
         '@type': 'WebSite',
         name: 'Daria Prindina Portfolio',
-        url: siteUrl,
+        url: SITE_URL,
         inLanguage: ['ru', 'en'],
       },
     ],

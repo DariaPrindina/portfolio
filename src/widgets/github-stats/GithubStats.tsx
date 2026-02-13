@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getGithubStats } from '@/lib/github';
+import { getGithubStats } from '@/shared/lib/github';
 
 const numberFormatter = new Intl.NumberFormat('ru-RU');
 

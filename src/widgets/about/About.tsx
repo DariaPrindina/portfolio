@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { about } from '@/data/about';
+import { about } from '@/entities/about/model/about';
 
 export default function About() {
   return (

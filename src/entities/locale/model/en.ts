@@ -1,7 +1,7 @@
-import type { CertificateItem, EducationItem } from '@/data/education';
-import type { ExperienceItem } from '@/data/experience';
-import type { Project } from '@/data/projects';
-import type { Skill } from '@/data/skills';
+import type { CertificateItem, EducationItem } from '@/entities/education/model/education';
+import type { ExperienceItem } from '@/entities/experience/model/experience';
+import type { Project } from '@/entities/project/model/projects';
+import type { Skill } from '@/entities/skill/model/skills';
 
 export const enProfile = {
   name: 'Daria Prindina',

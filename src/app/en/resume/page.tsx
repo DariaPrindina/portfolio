@@ -1,7 +1,7 @@
 import { Download, Eye } from 'lucide-react';
 import Link from 'next/link';
-import MotionEffects from '@/components/MotionEffects';
-import { resumeDocs } from '@/data/documents';
+import MotionEffects from '@/shared/ui/motion/MotionEffects';
+import { resumeDocs } from '@/entities/document/model/documents';
 
 export default function EnResumePage() {
   return (

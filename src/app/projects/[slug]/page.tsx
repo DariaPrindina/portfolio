@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import MotionEffects from '@/components/MotionEffects';
-import ProjectVisualPreview from '@/components/ProjectVisualPreview';
-import { getProjectBySlug, projects } from '@/data/projects';
+import MotionEffects from '@/shared/ui/motion/MotionEffects';
+import ProjectVisualPreview from '@/shared/ui/project-preview/ProjectVisualPreview';
+import { getProjectBySlug, projects } from '@/entities/project/model/projects';
+import { buildPageMetadata } from '@/shared/lib/seo';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -24,27 +25,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  return {
+  const baseMeta = buildPageMetadata({
     title: `${project.title} | Проект`,
     description: project.description,
+    url: `/projects/${project.slug}`,
+    imageAlt: 'Дарья Приндина — Frontend Developer',
+  });
+
+  return {
+    ...baseMeta,
     openGraph: {
-      title: `${project.title} | Проект`,
-      description: project.description,
+      ...baseMeta.openGraph,
       type: 'article',
-      images: [
-        {
-          url: '/images/avatar.jpg',
-          width: 1200,
-          height: 630,
-          alt: 'Дарья Приндина — Frontend Developer',
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${project.title} | Проект`,
-      description: project.description,
-      images: ['/images/avatar.jpg'],
     },
   };
 }

@@ -150,7 +150,6 @@ export default function EnPage() {
                 key={`${item.company}-${item.period}`}
                 className="experience-card"
                 data-reveal="up"
-                data-tilt
                 style={{ '--reveal-delay': `${index * 90}ms` } as CSSProperties}
               >
                 <header className="experience-card__header">
@@ -230,7 +229,6 @@ export default function EnPage() {
                 key={project.title}
                 className={`project-card ${project.isCurrent ? 'project-card--current' : ''}`}
                 data-reveal="up"
-                data-tilt
                 style={{ '--reveal-delay': `${index * 90}ms` } as CSSProperties}
               >
                 <div className="project-card__head">

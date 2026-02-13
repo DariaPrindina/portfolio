@@ -13,7 +13,6 @@ export default function Experience() {
             key={`${item.company}-${item.period}`}
             className="experience-card"
             data-reveal="up"
-            data-tilt
             style={{ '--reveal-delay': `${index * 90}ms` } as CSSProperties}
           >
             <header className="experience-card__header">

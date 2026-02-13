@@ -7,14 +7,19 @@ export default function Hero() {
   return (
     <section id="about" className="hero section" data-reveal="up">
       <div className="hero__avatar-wrap" data-reveal="zoom">
-        <Image
-          src={profile.avatar}
-          alt={profile.name}
-          className="hero__avatar"
-          width={180}
-          height={180}
-          priority
-        />
+        <span className="hero__avatar-mask">
+          <Image
+            src={profile.avatar}
+            alt={profile.name}
+            className="hero__avatar"
+            width={180}
+            height={180}
+            priority
+          />
+        </span>
+        <span className="hero__orbit hero__orbit--a" aria-hidden="true" />
+        <span className="hero__orbit hero__orbit--b" aria-hidden="true" />
+        <span className="hero__orbit hero__orbit--c" aria-hidden="true" />
       </div>
 
       <p className="hero__eyebrow" data-reveal="up">

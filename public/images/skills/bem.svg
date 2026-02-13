@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>BEM</title>
+  <rect x="4" y="4" width="56" height="56" rx="12" fill="#111827" />
+  <path d="M16 18h13c6 0 9 3 9 7 0 3-2 5-4 6 3 1 6 4 6 8 0 5-4 9-11 9H16V18zm9 12c3 0 5-1 5-4 0-2-2-3-5-3h-3v7h3zm1 13c3 0 6-1 6-4s-3-4-6-4h-4v8h4z" fill="#ffffff"/>
+  <path d="M42 18h6v30h-6z" fill="#22d3ee"/>
+</svg>

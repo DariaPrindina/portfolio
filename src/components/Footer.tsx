@@ -8,6 +8,7 @@ const navigation = [
   { href: '#experience', label: 'Опыт' },
   { href: '#education', label: 'Образование' },
   { href: '#projects', label: 'Проекты' },
+  { href: '#github', label: 'GitHub API' },
   { href: '#resume', label: 'Резюме' },
   { href: '#contact', label: 'Контакты' },
 ];

@@ -2,13 +2,11 @@
 
 import { useEffect } from 'react';
 
-const TILT_MAX_DEG = 5;
 
 export default function MotionEffects() {
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const revealNodes = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
-    const tiltNodes = Array.from(document.querySelectorAll<HTMLElement>('[data-tilt]'));
     const avatarNode = document.querySelector<HTMLElement>('.hero__avatar-wrap');
     const cleanupFns: Array<() => void> = [];
 
@@ -31,13 +29,6 @@ export default function MotionEffects() {
       revealNodes.forEach((node) => node.classList.add('is-visible'));
     }
 
-    const onPointerMove = (event: PointerEvent) => {
-      document.documentElement.style.setProperty('--mx', `${event.clientX}px`);
-      document.documentElement.style.setProperty('--my', `${event.clientY}px`);
-    };
-
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    cleanupFns.push(() => window.removeEventListener('pointermove', onPointerMove));
 
     const updateScrollProgress = () => {
       const scrollTop = window.scrollY;
@@ -59,31 +50,6 @@ export default function MotionEffects() {
       window.removeEventListener('resize', updateScrollProgress);
     });
 
-    if (!prefersReduced) {
-      tiltNodes.forEach((node) => {
-        const onMove = (event: PointerEvent) => {
-          const rect = node.getBoundingClientRect();
-          const px = (event.clientX - rect.left) / rect.width;
-          const py = (event.clientY - rect.top) / rect.height;
-          const rx = (0.5 - py) * TILT_MAX_DEG;
-          const ry = (px - 0.5) * TILT_MAX_DEG;
-          node.style.setProperty('--tilt-rx', `${rx.toFixed(2)}deg`);
-          node.style.setProperty('--tilt-ry', `${ry.toFixed(2)}deg`);
-        };
-
-        const onLeave = () => {
-          node.style.setProperty('--tilt-rx', '0deg');
-          node.style.setProperty('--tilt-ry', '0deg');
-        };
-
-        node.addEventListener('pointermove', onMove);
-        node.addEventListener('pointerleave', onLeave);
-        cleanupFns.push(() => {
-          node.removeEventListener('pointermove', onMove);
-          node.removeEventListener('pointerleave', onLeave);
-        });
-      });
-    }
 
     return () => {
       cleanupFns.forEach((cleanup) => cleanup());

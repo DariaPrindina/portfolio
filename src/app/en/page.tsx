@@ -34,10 +34,10 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: '/images/link-preview-frontend.svg',
+        url: '/images/avatar.jpg',
         width: 1200,
         height: 630,
-        alt: 'Frontend Portfolio Preview',
+        alt: 'Daria Prindina — Frontend Developer',
       },
     ],
   },
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: 'Daria Prindina | Frontend Developer',
     description:
       'Frontend Developer portfolio: React, Next.js, TypeScript, CRM migration case studies and product development.',
-    images: ['/images/link-preview-frontend.svg'],
+    images: ['/images/avatar.jpg'],
   },
 };
 

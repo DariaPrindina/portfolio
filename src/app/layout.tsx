@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import VisualLanguageToggle from '@/components/VisualLanguageToggle';
 import VisualThemeToggle from '@/components/VisualThemeToggle';
@@ -7,12 +7,12 @@ import './globals.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dariaprindina.dev';
 
-const geistSans = Geist({
+const geistSans = Inter({
   variable: '--font-geist-sans',
   subsets: ['latin', 'cyrillic'],
 });
 
-const geistMono = Geist_Mono({
+const geistMono = JetBrains_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 });
@@ -47,10 +47,10 @@ export const metadata: Metadata = {
     siteName: 'Daria Prindina Portfolio',
     images: [
       {
-        url: '/images/link-preview-frontend.svg',
+        url: '/images/avatar.jpg',
         width: 1200,
         height: 630,
-        alt: 'Frontend Portfolio Preview',
+        alt: 'Дарья Приндина — Frontend Developer',
       },
     ],
   },
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     title: 'Дарья Приндина | Frontend-разработчик',
     description:
       'Портфолио frontend-разработчика: React, Next.js, TypeScript, доступные и быстрые интерфейсы.',
-    images: ['/images/link-preview-frontend.svg'],
+    images: ['/images/avatar.jpg'],
   },
   robots: {
     index: true,
@@ -112,7 +112,7 @@ export default function RootLayout({
 
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
         <script
           type="application/ld+json"

@@ -99,10 +99,6 @@ export default function RootLayout({
 
   return (
     <html lang="ru" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://cdn.simpleicons.org" />
-        <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
-      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} theme-classic`}>
         <script
           type="application/ld+json"

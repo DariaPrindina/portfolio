@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { JetBrains_Mono, Manrope } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import VisualLanguageToggle from '@/components/VisualLanguageToggle';
 import VisualThemeToggle from '@/components/VisualThemeToggle';
@@ -7,7 +7,7 @@ import './globals.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://dariaprindina.dev';
 
-const geistSans = Manrope({
+const geistSans = Inter({
   variable: '--font-geist-sans',
   subsets: ['latin', 'cyrillic'],
 });

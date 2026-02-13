@@ -22,7 +22,18 @@ function runThemeSwitchAnimation() {
 }
 
 export default function VisualThemeToggle() {
-  const [theme, setTheme] = useState<VisualTheme>('classic');
+  const [theme, setTheme] = useState<VisualTheme>(() => {
+    if (typeof window === 'undefined') {
+      return 'classic';
+    }
+
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'cosmic' || stored === 'classic') {
+      return stored;
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'cosmic' : 'classic';
+  });
 
   useEffect(() => {
     applyVisualTheme(theme);
@@ -40,11 +51,11 @@ export default function VisualThemeToggle() {
       type="button"
       className="visual-theme-toggle"
       onClick={handleToggle}
-      aria-label={theme === 'cosmic' ? 'Переключить на классический стиль' : 'Переключить на космический стиль'}
-      title={theme === 'cosmic' ? 'Классический стиль' : 'Космический стиль'}
+      aria-label="Переключить визуальный стиль"
+      title="Переключить визуальный стиль"
     >
       <Stars size={17} aria-hidden="true" />
-      <span className="visual-theme-toggle__label">{theme === 'cosmic' ? 'Cosmic' : 'Classic'}</span>
+      <span className="visual-theme-toggle__label">Theme</span>
     </button>
   );
 }

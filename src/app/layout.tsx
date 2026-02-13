@@ -76,6 +76,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const themeBootstrapScript = `
+    (function () {
+      try {
+        var key = 'portfolio-visual-theme';
+        var stored = localStorage.getItem(key);
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var next = (stored === 'cosmic' || stored === 'classic') ? stored : (prefersDark ? 'cosmic' : 'classic');
+        document.body.classList.remove('theme-classic', 'theme-cosmic');
+        document.body.classList.add(next === 'cosmic' ? 'theme-cosmic' : 'theme-classic');
+      } catch (e) {}
+    })();
+  `;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -99,7 +112,8 @@ export default function RootLayout({
 
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} theme-classic`}>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrapScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -30,30 +30,30 @@ html.theme-switching::before {
 }
 
 :root {
-  --background: #060914;
-  --surface: #0b1224;
-  --surface-alt: #121b34;
-  --text: #e8efff;
-  --text-muted: #a8b7d8;
-  --border: #23365f;
-  --accent: #51b7ff;
-  --accent-hover: #78c8ff;
-  --accent-text: #061122;
-  --shadow: 0 20px 44px rgba(2, 8, 24, 0.58);
+  --background: #f5f7fb;
+  --surface: #ffffff;
+  --surface-alt: #ebf0ff;
+  --text: #121826;
+  --text-muted: #51607a;
+  --border: #d7deed;
+  --accent: #1763ff;
+  --accent-hover: #0f4ed1;
+  --accent-text: #ffffff;
+  --shadow: 0 16px 38px rgba(10, 25, 63, 0.12);
   --scroll-progress: 0;
 }
 
 .dark {
-  --background: #04070f;
-  --surface: #090f1f;
-  --surface-alt: #0f1730;
-  --text: #ecf2ff;
-  --text-muted: #b7c4e0;
-  --border: #2b3f69;
-  --accent: #7ecbff;
-  --accent-hover: #9ed8ff;
-  --accent-text: #04111f;
-  --shadow: 0 22px 48px rgba(0, 3, 12, 0.66);
+  --background: #0e1525;
+  --surface: #131d33;
+  --surface-alt: #1b2744;
+  --text: #f4f7ff;
+  --text-muted: #c0cae0;
+  --border: #304166;
+  --accent: #6ca5ff;
+  --accent-hover: #89b8ff;
+  --accent-text: #081125;
+  --shadow: 0 16px 42px rgba(5, 8, 14, 0.55);
 }
 
 body {
@@ -151,8 +151,8 @@ html.theme-switching body *::after {
   box-shadow: none;
 }
 
-html.dark .visual-theme-toggle:hover,
-html.dark .visual-language-toggle:hover {
+body.theme-cosmic .visual-theme-toggle:hover,
+body.theme-cosmic .visual-language-toggle:hover {
   border-color: #8fceff;
   background: #8fceff;
   color: #04111f;
@@ -188,17 +188,25 @@ body.theme-classic {
     var(--background);
 }
 
-html.dark body.theme-classic {
-  --background: #0e1525;
-  --surface: #131d33;
-  --surface-alt: #1b2744;
-  --text: #f4f7ff;
-  --text-muted: #c0cae0;
-  --border: #304166;
-  --accent: #6ca5ff;
-  --accent-hover: #89b8ff;
-  --accent-text: #081125;
-  --shadow: 0 16px 42px rgba(5, 8, 14, 0.55);
+body.theme-cosmic {
+  --background: #04070f;
+  --surface: #090f1f;
+  --surface-alt: #0f1730;
+  --text: #ecf2ff;
+  --text-muted: #b7c4e0;
+  --border: #2b3f69;
+  --accent: #7ecbff;
+  --accent-hover: #9ed8ff;
+  --accent-text: #04111f;
+  --shadow: 0 22px 48px rgba(0, 3, 12, 0.66);
+  background:
+    radial-gradient(circle at 14% 12%, rgba(60, 115, 255, 0.22), transparent 38%),
+    radial-gradient(circle at 85% 25%, rgba(36, 216, 255, 0.2), transparent 42%),
+    radial-gradient(circle at 70% 88%, rgba(168, 93, 255, 0.15), transparent 40%),
+    radial-gradient(1px 1px at 18% 24%, rgba(255, 255, 255, 0.4), transparent 50%),
+    radial-gradient(1px 1px at 62% 52%, rgba(173, 214, 255, 0.36), transparent 50%),
+    radial-gradient(1px 1px at 88% 78%, rgba(255, 255, 255, 0.34), transparent 50%),
+    var(--background);
 }
 
 body.theme-classic::before,
@@ -943,7 +951,7 @@ a {
   box-shadow: none;
 }
 
-html.dark .project-action-link--secondary:hover {
+body.theme-cosmic .project-action-link--secondary:hover {
   border-color: #8fceff;
   background: #1a2a47;
   color: #eaf6ff;
@@ -957,8 +965,8 @@ html.dark .project-action-link--secondary:hover {
   color: var(--accent-text);
 }
 
-html.dark .project-action-link.project-action-link--primary:hover,
-html.dark .project-action-link.project-action-link--detail:hover {
+body.theme-cosmic .project-action-link.project-action-link--primary:hover,
+body.theme-cosmic .project-action-link.project-action-link--detail:hover {
   border-color: #a8d8ff;
   background: #8fceff;
   color: #04111f;

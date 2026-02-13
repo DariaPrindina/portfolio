@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import type { Metadata } from 'next';
 import { ArrowRight, Download, ExternalLink, Eye, Github, Mail, Send } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,6 +15,32 @@ import {
   enSkills,
 } from '@/data/en';
 
+export const metadata: Metadata = {
+  title: 'Daria Prindina | Frontend Developer',
+  description:
+    'Frontend Developer portfolio: React, Next.js, TypeScript, CRM migration case studies and product development.',
+  alternates: {
+    canonical: '/en',
+    languages: {
+      ru: '/',
+      en: '/en',
+    },
+  },
+  openGraph: {
+    title: 'Daria Prindina | Frontend Developer',
+    description:
+      'Frontend Developer portfolio: React, Next.js, TypeScript, CRM migration case studies and product development.',
+    url: '/en',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Daria Prindina | Frontend Developer',
+    description:
+      'Frontend Developer portfolio: React, Next.js, TypeScript, CRM migration case studies and product development.',
+  },
+};
+
 export default function EnPage() {
   return (
     <>
@@ -27,6 +54,7 @@ export default function EnPage() {
               className="hero__avatar"
               width={180}
               height={180}
+              sizes="180px"
               priority
             />
           </div>
@@ -132,6 +160,7 @@ export default function EnPage() {
                   className="chip-list__logo"
                   width={18}
                   height={18}
+                  sizes="18px"
                   unoptimized
                 />
                 <span>{skill.name}</span>
@@ -252,7 +281,7 @@ export default function EnPage() {
                 ) : null}
 
                 <div className="project-card__actions">
-                  <Link href={`/projects/${project.slug}`} className="project-action-link project-action-link--detail">
+                  <Link href={`/projects/${project.slug}`} className="project-action-link project-action-link--primary">
                     Case study
                   </Link>
                   {project.liveUrl ? (
@@ -260,7 +289,7 @@ export default function EnPage() {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="project-action-link"
+                      className="project-action-link project-action-link--secondary"
                     >
                       <ExternalLink size={15} aria-hidden="true" />
                       Demo
@@ -271,7 +300,7 @@ export default function EnPage() {
                       href={project.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="project-action-link"
+                      className="project-action-link project-action-link--secondary"
                     >
                       <Github size={15} aria-hidden="true" />
                       Code
@@ -291,18 +320,23 @@ export default function EnPage() {
             Open the latest CV online or download it in PDF/Word format.
           </p>
           <div className="resume__actions" data-reveal="up">
-            <Link href="/en/resume" className="project-action-link project-action-link--detail">
+            <Link href="/en/resume" className="project-action-link project-action-link--primary">
               Open full page
             </Link>
-            <Link href="/docs/resume.pdf" target="_blank" rel="noopener noreferrer" className="project-action-link">
+            <Link
+              href="/docs/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-action-link project-action-link--primary"
+            >
               <Eye size={15} aria-hidden="true" />
               View PDF
             </Link>
-            <Link href="/docs/resume.pdf" download className="project-action-link">
+            <Link href="/docs/resume.pdf" download className="project-action-link project-action-link--secondary">
               <Download size={15} aria-hidden="true" />
               Download PDF
             </Link>
-            <Link href="/docs/resume.doc" download className="project-action-link">
+            <Link href="/docs/resume.doc" download className="project-action-link project-action-link--secondary">
               <Download size={15} aria-hidden="true" />
               Download Word
             </Link>

@@ -14,12 +14,15 @@ export default function Hero() {
             className="hero__avatar"
             width={180}
             height={180}
+            sizes="180px"
             priority
           />
         </span>
         <span className="hero__orbit hero__orbit--a" aria-hidden="true" />
         <span className="hero__orbit hero__orbit--b" aria-hidden="true" />
         <span className="hero__orbit hero__orbit--c" aria-hidden="true" />
+        <span className="hero__orbit hero__orbit--d" aria-hidden="true" />
+        <span className="hero__orbit hero__orbit--e" aria-hidden="true" />
       </div>
 
       <p className="hero__eyebrow" data-reveal="up">

@@ -26,16 +26,16 @@ export default function ResumePage() {
               href={resumeDocs.pdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="project-action-link"
+              className="project-action-link project-action-link--primary"
             >
               <Eye size={15} aria-hidden="true" />
               Открыть PDF
             </Link>
-            <Link href={resumeDocs.pdf} download className="project-action-link">
+            <Link href={resumeDocs.pdf} download className="project-action-link project-action-link--secondary">
               <Download size={15} aria-hidden="true" />
               Скачать PDF
             </Link>
-            <Link href={resumeDocs.doc} download className="project-action-link">
+            <Link href={resumeDocs.doc} download className="project-action-link project-action-link--secondary">
               <Download size={15} aria-hidden="true" />
               Скачать Word
             </Link>

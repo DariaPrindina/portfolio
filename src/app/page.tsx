@@ -1,4 +1,6 @@
+import type { Metadata } from 'next';
 import About from '@/components/About';
+import CaseStudyHighlight from '@/components/CaseStudyHighlight';
 import Contact from '@/components/Contact';
 import Education from '@/components/Education';
 import Experience from '@/components/Experience';
@@ -9,6 +11,31 @@ import MotionEffects from '@/components/MotionEffects';
 import Projects from '@/components/Projects';
 import ResumeSection from '@/components/ResumeSection';
 import Skills from '@/components/Skills';
+
+export const metadata: Metadata = {
+  title: 'Дарья Приндина | Frontend-разработчик',
+  description:
+    'Frontend-разработчик: React, Next.js, TypeScript. Кейсы миграции с JavaScript на React и развитие CRM-продуктов.',
+  alternates: {
+    canonical: '/',
+    languages: {
+      ru: '/',
+      en: '/en',
+    },
+  },
+  openGraph: {
+    title: 'Дарья Приндина | Frontend-разработчик',
+    description:
+      'Frontend-разработчик: React, Next.js, TypeScript. Кейсы миграции с JavaScript на React и развитие CRM-продуктов.',
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Дарья Приндина | Frontend-разработчик',
+    description:
+      'Frontend-разработчик: React, Next.js, TypeScript. Кейсы миграции с JavaScript на React и развитие CRM-продуктов.',
+  },
+};
 
 export default function Home() {
   return (
@@ -21,6 +48,7 @@ export default function Home() {
         <Experience />
         <Education />
         <Projects />
+        <CaseStudyHighlight />
         <GithubStats />
         <ResumeSection />
         <Contact />

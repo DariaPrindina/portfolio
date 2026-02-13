@@ -39,12 +39,12 @@ export default function Education() {
                       href={item.file}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="project-action-link"
+                      className="project-action-link project-action-link--primary"
                     >
                       <Eye size={15} aria-hidden="true" />
                       Смотреть
                     </Link>
-                    <Link href={item.file} download className="project-action-link">
+                    <Link href={item.file} download className="project-action-link project-action-link--secondary">
                       <Download size={15} aria-hidden="true" />
                       Скачать
                     </Link>

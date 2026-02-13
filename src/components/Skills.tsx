@@ -22,6 +22,7 @@ export default function Skills() {
               className="chip-list__logo"
               width={18}
               height={18}
+              sizes="18px"
               unoptimized
             />
             <span>{skill.name}</span>

@@ -28,7 +28,6 @@ export default function Footer() {
               {item.label}
             </Link>
           ))}
-          <Link href="/en">English version</Link>
         </nav>
       </div>
     </footer>

@@ -26,16 +26,16 @@ export default function EnResumePage() {
               href={resumeDocs.pdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="project-action-link"
+              className="project-action-link project-action-link--primary"
             >
               <Eye size={15} aria-hidden="true" />
               Open PDF
             </Link>
-            <Link href={resumeDocs.pdf} download className="project-action-link">
+            <Link href={resumeDocs.pdf} download className="project-action-link project-action-link--secondary">
               <Download size={15} aria-hidden="true" />
               Download PDF
             </Link>
-            <Link href={resumeDocs.doc} download className="project-action-link">
+            <Link href={resumeDocs.doc} download className="project-action-link project-action-link--secondary">
               <Download size={15} aria-hidden="true" />
               Download Word
             </Link>

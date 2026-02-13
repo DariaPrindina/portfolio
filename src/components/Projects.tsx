@@ -72,7 +72,7 @@ export default function Projects() {
             ) : null}
 
             <div className="project-card__actions">
-              <Link href={`/projects/${project.slug}`} className="project-action-link project-action-link--detail">
+              <Link href={`/projects/${project.slug}`} className="project-action-link project-action-link--primary">
                 Подробнее
               </Link>
               {project.liveUrl ? (
@@ -80,7 +80,7 @@ export default function Projects() {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="project-action-link"
+                  className="project-action-link project-action-link--secondary"
                 >
                   <ExternalLink size={15} aria-hidden="true" />
                   Демо
@@ -91,7 +91,7 @@ export default function Projects() {
                   href={project.repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="project-action-link"
+                  className="project-action-link project-action-link--secondary"
                 >
                   <Github size={15} aria-hidden="true" />
                   Код

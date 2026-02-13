@@ -33,10 +33,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       images: [
         {
-          url: '/images/link-preview-frontend.svg',
+          url: '/images/avatar.jpg',
           width: 1200,
           height: 630,
-          alt: 'Frontend Portfolio Preview',
+          alt: 'Дарья Приндина — Frontend Developer',
         },
       ],
     },
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title: `${project.title} | Проект`,
       description: project.description,
-      images: ['/images/link-preview-frontend.svg'],
+      images: ['/images/avatar.jpg'],
     },
   };
 }

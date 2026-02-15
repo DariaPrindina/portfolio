@@ -15,9 +15,9 @@ import { buildPageMetadata } from '@/shared/lib/seo';
 
 export const metadata: Metadata = {
   ...buildPageMetadata({
-    title: 'Дарья Приндина | Frontend-разработчик',
+    title: 'Дарья Приндина | React Developer',
     description:
-      'Frontend-разработчик: React, Next.js, TypeScript. Кейсы миграции с JavaScript на React и развитие CRM-продуктов.',
+      'React, Next.js, TypeScript. Миграция legacy JavaScript на современный продуктовый frontend.',
     url: '/',
     imageAlt: 'Дарья Приндина — Frontend Developer',
   }),

@@ -18,9 +18,9 @@ const geistMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Дарья Приндина | Frontend-разработчик',
+  title: 'Дарья Приндина | React Developer',
   description:
-    'Портфолио frontend-разработчика: React, Next.js, TypeScript, доступные и быстрые интерфейсы.',
+    'React, Next.js, TypeScript. Миграция legacy JavaScript на современный продуктовый frontend.',
   keywords: [
     'frontend developer',
     'react developer',
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ru_RU',
     url: '/',
-    title: 'Дарья Приндина | Frontend-разработчик',
+    title: 'Дарья Приндина | React Developer',
     description:
-      'Портфолио frontend-разработчика: React, Next.js, TypeScript, доступные и быстрые интерфейсы.',
+      'React, Next.js, TypeScript. Миграция legacy JavaScript на современный продуктовый frontend.',
     siteName: 'Daria Prindina Portfolio',
     images: [
       {
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Дарья Приндина | Frontend-разработчик',
+    title: 'Дарья Приндина | React Developer',
     description:
-      'Портфолио frontend-разработчика: React, Next.js, TypeScript, доступные и быстрые интерфейсы.',
+      'React, Next.js, TypeScript. Миграция legacy JavaScript на современный продуктовый frontend.',
     images: [OG_IMAGE],
   },
   robots: {

@@ -384,6 +384,18 @@ a {
   margin: 3rem 0 1.25rem;
 }
 
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  width: 100%;
+  gap: 1rem;
+  align-items: center;
+}
+
+.hero__main {
+  min-width: 0;
+}
+
 .hero__avatar-wrap {
   --avatar-offset: 0px;
   position: relative;
@@ -580,6 +592,54 @@ a {
   flex-wrap: wrap;
   gap: 0.65rem;
   margin-top: 0.8rem;
+}
+
+.hero__aside {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.hero__info-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.78rem 0.86rem;
+  background: color-mix(in srgb, var(--surface-alt) 66%, transparent);
+}
+
+.hero__info-label {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
+
+.hero__info-value {
+  margin: 0.22rem 0 0;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.hero__info-note {
+  margin: 0.2rem 0 0;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.hero__chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+  padding: 0;
+  margin: 0.48rem 0 0;
+}
+
+.hero__chips li {
+  font-size: 0.74rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.18rem 0.5rem;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
 }
 
 .btn {
@@ -1696,6 +1756,10 @@ a.contact__meta:hover {
   .hero {
     min-height: auto;
     margin-top: 1.2rem;
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
   }
 
   .hero__avatar-wrap {

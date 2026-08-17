@@ -1,29 +1,31 @@
-# Portfolio
+# Портфолио
 
-Портфолио на Next.js (App Router) и TypeScript.
+Сайт-портфолио на Next.js (App Router) и TypeScript: https://dariaprindina.ru
 
 ## Архитектура
 
-- `src/app` - роуты и layout (Next.js App Router).
-- `src/widgets` - секции страниц (Hero, Projects, Experience и т.д.).
-- `src/entities` - предметные модели и типизированные данные (skills, projects, profile, education).
-- `src/shared` - общий слой: `ui`, `lib`, `config`.
-  - `src/shared/ui/lists` - общие list-компоненты RU/EN.
-  - `src/shared/lib` - SEO и GitHub API-утилиты.
-  - `src/shared/config` - домен и OG-конфиг.
+Feature-Sliced Design:
 
-## Что улучшено
+- `src/app` — маршруты и layout. Route groups `(ru)` и `(en)` дают по своему
+  корневому layout: атрибут `lang` живёт на `<html>`, а его рендерит только
+  корневой layout, поэтому вложенный переопределить его не может. URL при этом
+  не меняются, страницы остаются статическими.
+- `src/app/styles` — стили по слоям, `globals.css` только собирает их вместе.
+- `src/widgets` — секции страниц (Hero, Projects, Experience и другие).
+- `src/entities` — предметные модели и данные.
+  - `entities/locale/model/content.ts` — единственный источник контента для
+    русской и английской версии; виджеты принимают `locale`.
+- `src/shared` — общий слой: `ui`, `lib`, `config`.
 
-- Снижен дублирующийся JSX между RU и EN версиями через shared-компоненты.
-- Централизована генерация `Metadata` (OpenGraph/Twitter) через `buildPageMetadata`.
-- Добавлены инженерные quality-скрипты: `check`, `typecheck`, `lint:fix`.
-- Добавлена тестовая база на `Vitest` + `jsdom`.
-- Настроены pre-commit хуки: `husky` + `lint-staged`.
-- Усилен TypeScript-конфиг (`noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noFallthroughCasesInSwitch`).
-- Добавлен CI workflow `.github/workflows/quality.yml` для автоматической проверки lint/typecheck/test/build.
-- Добавлен `.editorconfig` для единообразного форматирования.
-- Добавлен динамический social preview (`/opengraph-image`) для стабильного предпросмотра в мессенджерах.
-- Удалены лишние dev-зависимости, которые не использовались в проекте.
+## Дизайн
+
+Одна система тем на CSS-токенах в `src/app/styles/tokens.css`: светлая по
+умолчанию, тёмная переопределяет значения через `html.dark`. Переключение —
+через `next-themes`.
+
+Опыт показан дорожками на временной шкале. Полоса и карточка с текстом
+разделены намеренно: ширина полосы пропорциональна длительности работы, и у
+короткого проекта текст в неё не поместится.
 
 ## Требования
 
@@ -40,11 +42,40 @@ npm run dev
 ## Проверки
 
 ```bash
-npm run lint
-npm run typecheck
 npm run check
-npm run test
-npm run build
 ```
 
-Если `npm run build` падает с ошибкой версии Node, обновите Node.js до версии 20+.
+```bash
+npm run test
+```
+
+`npm run check` — это ESLint и `tsc --noEmit`. Тесты покрывают чистую логику:
+подсветку активного раздела, шкалу времени, переключатель языка, фильтр
+проектов, соответствие палитры WCAG AA и связность идентификаторов секций.
+
+Те же проверки выполняются в CI как job, от которого зависит деплой, поэтому
+push в `main` не может выкатиться без них.
+
+## Превью для соцсетей
+
+В метаданных указан статический файл `public/images/og-preview-static.png` —
+так превью не зависит от того, успеет ли отрендериться картинка, когда её
+запрашивает краулер.
+
+Исходник превью — `src/app/(ru)/opengraph-image.tsx`. После правки дизайна
+запусти `npm run dev`, найди хешированный адрес маршрута в выводе
+`npm run build` (строка вида `/opengraph-image-xxxxx`) и сохрани картинку
+поверх статического файла:
+
+```bash
+curl -s http://localhost:3000/opengraph-image-35zkfg -o public/images/og-preview-static.png
+```
+
+Текст на превью только латиницей: satori рисует кириллицу лишь со встроенным
+шрифтом, а `next/font` отдаёт woff2, который satori не поддерживает.
+
+## Деплой
+
+Push в `main` запускает GitHub Actions: сначала проверки, затем деплой по SSH
+на VDS, где приложение поднимается через Docker Compose с потолком в 256 МБ
+памяти.

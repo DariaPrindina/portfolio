@@ -133,12 +133,18 @@ export default function StarField() {
     /** Туманность статична: её незачем перерисовывать каждый кадр. */
     const drawNebula = () => {
       const canvas = nebulaCanvas;
-      const context = canvas?.getContext('2d');
-      if (!canvas || !context) {
+      if (!canvas) {
         return;
       }
 
-      const { width, height } = canvas.getBoundingClientRect();
+      // Размер холста нужно задать до отрисовки: иначе он остаётся
+      // 300×150 по умолчанию, растягивается на весь экран, и вместо
+      // мягкого свечения получаются блочные разводы.
+      const { width, height, context } = sizeCanvas(canvas);
+      if (!context) {
+        return;
+      }
+
       context.clearRect(0, 0, width, height);
 
       for (const cloud of NEBULAE) {

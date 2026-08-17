@@ -2,6 +2,8 @@ services:
   app:
     build: .
     restart: always
+    mem_limit: 256m
+    memswap_limit: 512m
     environment:
       - NODE_ENV=production
     ports:

@@ -12,7 +12,9 @@ export const skills: Skill[] = [
   { name: 'Zustand', logo: '/images/skills/zustand.svg' },
   { name: 'React Hook Form', logo: 'https://cdn.simpleicons.org/reacthookform/EC5990' },
   { name: 'React Router', logo: 'https://cdn.simpleicons.org/reactrouter/CA4245' },
-  { name: 'React DnD', logo: 'https://cdn.simpleicons.org/react/61DAFB' },
+  { name: 'Vitest', logo: 'https://cdn.simpleicons.org/vitest/6E9F18' },
+  { name: 'Playwright', logo: 'https://cdn.simpleicons.org/playwright/2EAD33' },
+  { name: 'Storybook', logo: 'https://cdn.simpleicons.org/storybook/FF4785' },
   { name: 'Lodash', logo: 'https://cdn.simpleicons.org/lodash/3492FF' },
   { name: 'Next.js', logo: 'https://cdn.simpleicons.org/nextdotjs/8FA8FF' },
   { name: 'Redux', logo: 'https://cdn.simpleicons.org/redux/764ABC' },
@@ -27,3 +29,35 @@ export const skills: Skill[] = [
   { name: 'Jira', logo: 'https://cdn.simpleicons.org/jira/0052CC' },
   { name: 'Git', logo: 'https://cdn.simpleicons.org/git/F05032' },
 ];
+
+export type SkillGroup = {
+  id: 'core' | 'data' | 'quality';
+  title: string;
+  items: string[];
+};
+
+/**
+ * Навыки сгруппированы по роли в стеке: одна куча из 24 иконок
+ * ничего не сообщала о том, как человек думает о технологиях.
+ */
+export const skillGroups: SkillGroup[] = [
+  {
+    id: 'core',
+    title: 'Каркас',
+    items: ['React 19', 'TypeScript', 'Next.js', 'Vite', 'React Router', 'JavaScript'],
+  },
+  {
+    id: 'data',
+    title: 'Данные и состояние',
+    items: ['TanStack Query', 'Zustand', 'Redux', 'React Hook Form', 'Axios', 'REST API'],
+  },
+  {
+    id: 'quality',
+    title: 'Качество и процесс',
+    items: ['Vitest', 'Playwright', 'Storybook', 'ESLint', 'Git', 'Figma', 'Jira'],
+  },
+];
+
+export function findSkillLogo(name: string) {
+  return skills.find((skill) => skill.name === name)?.logo;
+}

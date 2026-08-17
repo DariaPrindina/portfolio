@@ -1,69 +1,38 @@
-import type { Metadata } from 'next';
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import MotionEffects from '@/shared/ui/motion/MotionEffects';
 import ProjectVisualPreview from '@/shared/ui/project-preview/ProjectVisualPreview';
-import { getProjectBySlug, projects } from '@/entities/project/model/projects';
-import { buildPageMetadata } from '@/shared/lib/seo';
+import type { Project } from '@/entities/project/model/projects';
 
-type PageProps = {
-  params: Promise<{ slug: string }>;
+export type ProjectPageLabels = {
+  back: string;
+  backHref: string;
+  current: string;
+  stackAria: string;
+  caseStudy: string;
+  challenge: string;
+  solution: string;
+  demo: string;
+  code: string;
+  codeWindow: string;
+  previewWindow: string;
 };
 
-export async function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
-}
+type ProjectPageProps = {
+  project: Project;
+  labels: ProjectPageLabels;
+  lang: 'ru' | 'en';
+};
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
-
-  if (!project) {
-    return {
-      title: 'Проект не найден',
-    };
-  }
-
-  const baseMeta = buildPageMetadata({
-    title: `${project.title} | Проект`,
-    description: project.description,
-    url: `/projects/${project.slug}`,
-    imageAlt: 'Дарья Приндина — Frontend Developer',
-  });
-
-  return {
-    ...baseMeta,
-    alternates: {
-      canonical: `/projects/${project.slug}`,
-      languages: {
-        ru: `/projects/${project.slug}`,
-        en: '/en#projects',
-      },
-    },
-    openGraph: {
-      ...baseMeta.openGraph,
-      type: 'article',
-    },
-  };
-}
-
-export default async function ProjectPage({ params }: PageProps) {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
-
-  if (!project) {
-    notFound();
-  }
-
+export default function ProjectPage({ project, labels, lang }: ProjectPageProps) {
   const projectJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: project.title,
     description: project.description,
-    inLanguage: 'ru',
+    inLanguage: lang,
     about: project.stack,
-    url: `/projects/${project.slug}`,
+    url: `${lang === 'en' ? '/en' : ''}/projects/${project.slug}`,
   };
 
   return (
@@ -76,11 +45,11 @@ export default async function ProjectPage({ params }: PageProps) {
       <div className="container">
         <section className="section project-detail" data-reveal="up">
           <div className="project-detail__top">
-            <Link href="/#projects" className="project-detail__back">
-              <ArrowLeft size={16} aria-hidden="true" />
-              Назад к проектам
+            <Link href={labels.backHref} className="project-detail__back">
+              <ArrowLeft size={14} aria-hidden="true" />
+              {labels.back}
             </Link>
-            {project.isCurrent ? <span className="project-card__badge">Текущий проект</span> : null}
+            {project.isCurrent ? <span className="project-badge">{labels.current}</span> : null}
           </div>
 
           <h1 className="project-detail__title" data-reveal="up">
@@ -90,41 +59,31 @@ export default async function ProjectPage({ params }: PageProps) {
             {project.longDescription}
           </p>
 
-          <ul className="project-card__stack" aria-label={`Стек ${project.title}`} data-reveal="up">
+          <ul className="stack-list" aria-label={`${labels.stackAria} ${project.title}`} data-reveal="up">
             {project.stack.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
 
           {project.highlights?.length ? (
-            <ul className="project-card__highlights" data-reveal="up">
+            <ul className="highlights" data-reveal="up">
               {project.highlights.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           ) : null}
 
-          <div className="project-card__actions" data-reveal="up">
+          <div className="pblock__actions" data-reveal="up">
             {project.liveUrl ? (
-              <Link
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-action-link project-action-link--secondary"
-              >
-                <ExternalLink size={15} aria-hidden="true" />
-                Демо
+              <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn">
+                <ExternalLink size={14} aria-hidden="true" />
+                {labels.demo}
               </Link>
             ) : null}
             {project.repoUrl ? (
-              <Link
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-action-link project-action-link--secondary"
-              >
-                <Github size={15} aria-hidden="true" />
-                Код
+              <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="btn">
+                <Github size={14} aria-hidden="true" />
+                {labels.code}
               </Link>
             ) : null}
           </div>
@@ -132,24 +91,25 @@ export default async function ProjectPage({ params }: PageProps) {
 
         {project.caseStudy ? (
           <section className="section" data-reveal="up">
+            <p className="section__label">case study</p>
             <h2 className="section__title" data-reveal="up">
-              Case Study
+              {labels.caseStudy}
             </h2>
             <p className="case-study__context" data-reveal="up">
               {project.caseStudy.context}
             </p>
 
             <div className="case-study__grid">
-              <article className="case-study__block" data-reveal="up">
-                <h3>Задача</h3>
+              <article className="case-study__block case-study__block--challenge" data-reveal="up">
+                <h3>{labels.challenge}</h3>
                 <ul>
                   {project.caseStudy.challenge.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
               </article>
-              <article className="case-study__block" data-reveal="up">
-                <h3>Решение</h3>
+              <article className="case-study__block case-study__block--solution" data-reveal="up">
+                <h3>{labels.solution}</h3>
                 <ul>
                   {project.caseStudy.solution.map((item) => (
                     <li key={item}>{item}</li>
@@ -161,8 +121,8 @@ export default async function ProjectPage({ params }: PageProps) {
             <div className="case-study__impact" data-reveal="up">
               {project.caseStudy.impact.map((metric) => (
                 <article key={metric.label} className="case-study__metric">
-                  <p>{metric.label}</p>
-                  <strong>{metric.value}</strong>
+                  <p className="case-study__metric-label">{metric.label}</p>
+                  <p className="case-study__metric-value">{metric.value}</p>
                 </article>
               ))}
             </div>
@@ -172,14 +132,20 @@ export default async function ProjectPage({ params }: PageProps) {
         <section className="section project-showcase" data-reveal="up">
           <div className="project-showcase__grid">
             <article className="showcase-window" data-reveal="up">
-              <header className="showcase-window__header">{project.codeTitle}</header>
+              <header className="showcase-window__header">
+                <span className="showcase-window__dot" aria-hidden="true" />
+                {project.codeTitle}
+              </header>
               <pre className="showcase-window__code">
                 <code>{project.codeExample}</code>
               </pre>
             </article>
 
             <article className="showcase-window" data-reveal="up">
-              <header className="showcase-window__header">Визуал компонента</header>
+              <header className="showcase-window__header">
+                <span className="showcase-window__dot" aria-hidden="true" />
+                {labels.previewWindow}
+              </header>
               <div className="showcase-window__preview">
                 <ProjectVisualPreview slug={project.slug} />
               </div>

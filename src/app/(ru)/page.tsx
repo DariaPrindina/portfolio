@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import About from '@/widgets/about/About';
-import CaseStudyHighlight from '@/widgets/case-study-highlight/CaseStudyHighlight';
 import Contact from '@/widgets/contact/Contact';
 import Education from '@/widgets/education/Education';
 import Experience from '@/widgets/experience/Experience';
-import Footer from '@/widgets/footer/Footer';
 import GithubStats from '@/widgets/github-stats/GithubStats';
 import Hero from '@/widgets/hero/Hero';
 import MotionEffects from '@/shared/ui/motion/MotionEffects';
@@ -41,12 +39,10 @@ export default function Home() {
         <Experience />
         <Education />
         <Projects />
-        <CaseStudyHighlight />
         <GithubStats />
         <ResumeSection />
         <Contact />
       </div>
-      <Footer />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import OpenGraphImage from '@/app/opengraph-image';
+import OpenGraphImage from './opengraph-image';
 
 export const runtime = 'edge';
 export const alt = 'Daria Prindina — Frontend Developer';

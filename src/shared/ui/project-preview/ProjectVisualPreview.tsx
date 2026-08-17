@@ -50,6 +50,29 @@ function CurrencyPreview() {
   );
 }
 
+function ChatPreview() {
+  return (
+    <div className="preview-shell preview-shell--chat">
+      <div className="preview-chat__status">
+        <span className="preview-chat__dot" />
+        online
+      </div>
+      <div className="preview-chat__bubble preview-chat__bubble--in">
+        Созвон в 18:00?
+      </div>
+      <div className="preview-chat__bubble preview-chat__bubble--out">
+        Да, буду
+        <small>✓✓</small>
+      </div>
+      <div className="preview-chat__typing">
+        <span />
+        <span />
+        <span />
+      </div>
+    </div>
+  );
+}
+
 function TestPreview() {
   return (
     <div className="preview-shell preview-shell--test">
@@ -63,6 +86,7 @@ function TestPreview() {
 export default function ProjectVisualPreview({ slug }: Props) {
   const map: Record<string, ReactNode> = {
     'arbat-beauty-crm': <CrmVisitCardPreview />,
+    'vibe-x': <ChatPreview />,
     'izumrudny-gorod-site': <InfoSectionPreview />,
     'currency-converter': <CurrencyPreview />,
     'procharity-platform': <TestPreview />,

@@ -1,20 +1,37 @@
-import type { CSSProperties } from 'react';
-import { about } from '@/entities/about/model/about';
+import { getContent, type Locale } from '@/entities/locale/model/content';
+import { SECTION_IDS } from '@/shared/config/sections';
 
-export default function About() {
+export default function About({ locale = 'ru' }: { locale?: Locale }) {
+  const { about } = getContent(locale);
+
   return (
-    <section id="about-me" className="section" data-reveal="up">
+    <section id={SECTION_IDS.about} className="section" data-reveal="up">
+      <p className="section__label">{about.label}</p>
       <h2 className="section__title" data-reveal="up">
-        Обо мне
+        {about.title}
       </h2>
-      <p className="about__intro" data-reveal="up">
-        {about.intro}
-      </p>
-      <ul className="about__list">
-        {about.points.map((point, index) => (
-          <li key={point} data-reveal="up" style={{ '--reveal-delay': `${index * 70}ms` } as CSSProperties}>
-            {point}
-          </li>
+
+      {/*
+        Знаки «−» и «+» несут смысл сами по себе, а подписи для скринридеров
+        дублируют его текстом — цвет здесь не единственный носитель информации.
+      */}
+      <div className="about__diff" data-reveal="up">
+        {about.migration.map((row) => (
+          <p key={row.text} className={`about__row about__row--${row.kind}`}>
+            <span className="about__sign" aria-hidden="true">
+              {row.kind === 'add' ? '+' : '\u2212'}
+            </span>
+            <span>
+              <span className="sr-only">{row.kind === 'add' ? about.after : about.before}</span>
+              {row.text}
+            </span>
+          </p>
+        ))}
+      </div>
+
+      <ul className="about__points" data-reveal="up">
+        {about.points.map((point) => (
+          <li key={point}>{point}</li>
         ))}
       </ul>
     </section>

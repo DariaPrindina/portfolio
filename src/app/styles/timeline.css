@@ -1,0 +1,275 @@
+/*
+ * Дорожки опыта и проектов.
+ * У опыта есть настоящая шкала времени — позиции считает computeTimelineSpans.
+ * У проектов шкалы нет: дат начала и конца в данных нет, и рисовать их
+ * наугад значило бы выдумывать факты. Дорожки там группируют по категориям.
+ */
+
+.timeline__axis {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: var(--dim);
+}
+
+.timeline__ticks {
+  display: grid;
+}
+
+.timeline__ticks span {
+  padding: 0 0 0.5rem 0.5rem;
+  border-left: 1px solid var(--line);
+}
+
+.lane {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  border-top: 1px solid var(--line);
+}
+
+.lane__label {
+  padding: 0.9rem 0.8rem 0.9rem 0;
+  border-right: 1px solid var(--line);
+}
+
+.lane__company {
+  font-size: var(--step--1);
+  font-weight: 620;
+  color: var(--head);
+}
+
+.lane__role {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  color: var(--dim);
+  margin-top: 0.2rem;
+}
+
+.lane__track {
+  position: relative;
+  padding: 0.7rem 0 1rem;
+  background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 20% 100%;
+}
+
+/* Полоса несёт только место на шкале: у короткой работы она шириной
+   в несколько десятков пикселей, и текст в неё не поместился бы. */
+.lane__bar {
+  position: absolute;
+  top: 0.7rem;
+  height: 22px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--teal) 30%, transparent);
+  border-left: 3px solid var(--teal);
+}
+
+.lane__bar--past {
+  background: color-mix(in srgb, var(--violet) 26%, transparent);
+  border-left-color: var(--violet);
+}
+
+.lane__bar--intern {
+  background: color-mix(in srgb, var(--dim) 28%, transparent);
+  border-left-color: var(--dim);
+}
+
+.lane__card {
+  margin-top: calc(22px + 1rem);
+  padding-left: 0.9rem;
+}
+
+.lane__period {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: var(--dim);
+  margin-bottom: 0.3rem;
+}
+
+.lane__now {
+  color: var(--teal);
+}
+
+.lane__summary {
+  font-size: var(--step--1);
+  color: var(--head);
+  font-weight: 560;
+}
+
+.lane__bullets {
+  margin: 0.5rem 0 0;
+  padding-left: 1rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+  display: grid;
+  gap: 0.25rem;
+}
+
+/* Дорожки проектов: те же полосы, но без шкалы времени. */
+.plane {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  border-top: 1px solid var(--line);
+}
+
+.plane__label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  color: var(--dim);
+  padding: 1.1rem 0.8rem 1.1rem 0;
+  border-right: 1px solid var(--line);
+}
+
+.plane__track {
+  padding: 0.7rem 0 0.7rem 0.9rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.pblock {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  background: var(--panel);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.85rem 1rem;
+}
+
+.pblock--pet {
+  border-left-color: var(--violet);
+}
+
+.pblock--team {
+  border-left-color: var(--amber);
+}
+
+.pblock__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.pblock__title {
+  font-size: var(--step-1);
+  font-weight: 620;
+}
+
+.pblock__badge {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 14%, transparent);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+}
+
+.pblock__desc {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+.pblock__figures {
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  color: var(--dim);
+}
+
+.pblock__figure-value {
+  display: block;
+  font-size: var(--step-1);
+  color: var(--head);
+  font-weight: 620;
+  font-variant-numeric: tabular-nums;
+}
+
+.pblock__actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-top: 0.9rem;
+}
+
+.project-filters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+
+.project-filter {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.project-filter:hover {
+  color: var(--head);
+  border-color: var(--teal);
+}
+
+.project-filter--active {
+  color: var(--teal);
+  border-color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 12%, transparent);
+}
+
+/*
+ * На узком экране абсолютное позиционирование по шкале нечитаемо:
+ * дорожки разворачиваются в обычный список.
+ */
+@media (max-width: 760px) {
+  .timeline__axis {
+    display: none;
+  }
+
+  .lane,
+  .plane {
+    grid-template-columns: 1fr;
+  }
+
+  .lane__label,
+  .plane__label {
+    border-right: 0;
+    padding: 0.8rem 0 0.4rem;
+  }
+
+  /* На узком экране шкала не читается: полоса убирается,
+     остаётся карточка с периодом в тексте. */
+  .lane__track {
+    padding: 0 0 0.8rem;
+    background-image: none;
+  }
+
+  .lane__bar {
+    display: none;
+  }
+
+  .lane__card {
+    margin-top: 0;
+    padding-left: 0;
+    border-left: 3px solid var(--line);
+    padding-left: 0.8rem;
+  }
+
+  .plane__track {
+    padding-left: 0;
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-filter {
+    transition: none;
+  }
+}

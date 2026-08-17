@@ -3,26 +3,7 @@
 import { Languages } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-function mapToTargetPath(pathname: string) {
-  const isEnglish = pathname === '/en' || pathname.startsWith('/en/');
-
-  if (isEnglish) {
-    const ruPath = pathname.replace(/^\/en/, '') || '/';
-    return {
-      href: ruPath,
-      label: 'RU',
-      title: 'Переключить на русский',
-    };
-  }
-
-  const enPath = pathname === '/' ? '/en' : `/en${pathname}`;
-  return {
-    href: enPath,
-    label: 'EN',
-    title: 'Switch to English',
-  };
-}
+import { mapToTargetPath } from '@/shared/lib/localePath';
 
 export default function VisualLanguageToggle() {
   const pathname = usePathname();

@@ -1,33 +1,22 @@
 import Link from 'next/link';
-import { profile } from '@/entities/profile/model/profile';
+import { getContent, type Locale } from '@/entities/locale/model/content';
 
-const navigation = [
-  { href: '#about', label: 'Главная' },
-  { href: '#about-me', label: 'Обо мне' },
-  { href: '#skills', label: 'Навыки' },
-  { href: '#experience', label: 'Опыт' },
-  { href: '#education', label: 'Образование' },
-  { href: '#projects', label: 'Проекты' },
-  { href: '#github', label: 'GitHub API' },
-  { href: '#resume', label: 'Резюме' },
-  { href: '#contact', label: 'Контакты' },
-];
-
-export default function Footer() {
-  const year = new Date().getFullYear();
+export default function Footer({ locale = 'ru' }: { locale?: Locale }) {
+  const { profile, footer } = getContent(locale);
 
   return (
     <footer className="footer">
       <div className="container footer__inner">
         <p>
-          © {year} {profile.name}
+          © {new Date().getFullYear()} {profile.name}
         </p>
-        <nav className="footer__nav" aria-label="Навигация по странице">
-          {navigation.map((item) => (
-            <Link key={item.href} href={item.href}>
+        <nav className="footer__nav" aria-label={footer.ariaLabel}>
+          {footer.nav.map((item) => (
+            <a key={item.href} href={item.href}>
               {item.label}
-            </Link>
+            </a>
           ))}
+          <Link href={footer.otherLocale.href}>{footer.otherLocale.label}</Link>
         </nav>
       </div>
     </footer>

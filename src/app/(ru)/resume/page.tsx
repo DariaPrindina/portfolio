@@ -7,14 +7,13 @@ import { buildPageMetadata } from '@/shared/lib/seo';
 
 export const metadata: Metadata = {
   ...buildPageMetadata({
-    title: 'Resume | Daria Prindina',
-    description: 'Resume page: online view and PDF/Word download.',
-    url: '/en/resume',
-    locale: 'en_US',
-    imageAlt: 'Daria Prindina Resume',
+    title: 'Резюме | Дарья Приндина',
+    description: 'Страница резюме: просмотр и скачивание PDF/Word.',
+    url: '/resume',
+    imageAlt: 'Резюме Дарьи Приндиной',
   }),
   alternates: {
-    canonical: '/en/resume',
+    canonical: '/resume',
     languages: {
       ru: '/resume',
       en: '/en/resume',
@@ -22,22 +21,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function EnResumePage() {
+export default function ResumePage() {
   return (
     <>
       <MotionEffects />
       <div className="container">
         <section className="section resume-page" data-reveal="up">
           <div className="project-detail__top">
-            <Link href="/en#resume" className="project-detail__back">
-              Back to portfolio
+            <Link href="/#resume" className="project-detail__back">
+              Назад на главную
             </Link>
           </div>
           <h1 className="project-detail__title" data-reveal="up">
-            Resume
+            Резюме
           </h1>
           <p className="project-detail__description" data-reveal="up">
-            Open the latest CV in full size and download all documents from one page.
+            Здесь можно посмотреть актуальное резюме и скачать документы в нужном формате.
           </p>
 
           <div className="resume__actions" data-reveal="up">
@@ -45,23 +44,23 @@ export default function EnResumePage() {
               href={resumeDocs.pdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="project-action-link project-action-link--primary"
+              className="btn btn--primary"
             >
               <Eye size={15} aria-hidden="true" />
-              Open PDF
+              Открыть PDF
             </Link>
-            <Link href={resumeDocs.pdf} download className="project-action-link project-action-link--secondary">
+            <Link href={resumeDocs.pdf} download className="btn">
               <Download size={15} aria-hidden="true" />
-              Download PDF
+              Скачать PDF
             </Link>
-            <Link href={resumeDocs.doc} download className="project-action-link project-action-link--secondary">
+            <Link href={resumeDocs.doc} download className="btn">
               <Download size={15} aria-hidden="true" />
-              Download Word
+              Скачать Word
             </Link>
           </div>
 
           <div className="resume__viewer" data-reveal="up">
-            <iframe src={`${resumeDocs.pdf}#view=FitH`} title="Resume PDF" loading="lazy" />
+            <iframe src={`${resumeDocs.pdf}#view=FitH`} title="Резюме PDF" loading="lazy" />
           </div>
         </section>
       </div>

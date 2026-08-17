@@ -87,12 +87,14 @@ export default function ExperienceTimeline({
                 </p>
 
                 <div className="lane__body">
-                  <p className="lane__summary">{item.summary}</p>
-                  <ul className="lane__bullets">
-                    {item.bullets.slice(0, 3).map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
+                  <div className="lane__body-inner">
+                    <p className="lane__summary">{item.summary}</p>
+                    <ul className="lane__bullets">
+                      {item.bullets.slice(0, 3).map((bullet) => (
+                        <li key={bullet}>{bullet}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </article>
             </div>

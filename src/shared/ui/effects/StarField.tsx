@@ -10,6 +10,10 @@ type Star = {
   /** Своя фаза мерцания, иначе всё поле пульсирует в такт. */
   phase: number;
   speed: number;
+  /** Настоящие звёзды не белые: холодные голубоватые, тёплые желтоватые. */
+  color: string;
+  /** Крупные светила получают гало — оно и создаёт ощущение глубины. */
+  halo: boolean;
 };
 
 type Meteor = {
@@ -23,12 +27,28 @@ type Meteor = {
 
 /** Три плана глубины: чем дальше, тем мельче звёзды и медленнее сдвиг. */
 const LAYERS = [
-  { density: 1 / 9000, maxRadius: 0.8, alpha: 0.45 },
-  { density: 1 / 11000, maxRadius: 1.2, alpha: 0.65 },
-  { density: 1 / 16000, maxRadius: 1.7, alpha: 0.9 },
+  { density: 1 / 5200, maxRadius: 0.8, alpha: 0.5 },
+  { density: 1 / 7000, maxRadius: 1.3, alpha: 0.7 },
+  { density: 1 / 11000, maxRadius: 1.9, alpha: 0.95 },
 ];
 
-const MAX_PER_LAYER = 220;
+const STAR_COLORS = [
+  '#ffffff',
+  '#ffffff',
+  '#dbe7ff',
+  '#c9dcff',
+  '#ffeccc',
+  '#ffd9b0',
+];
+
+/** Туманности берут те же акцентные тона, что и интерфейс. */
+const NEBULAE = [
+  { x: 0.18, y: 0.22, radius: 0.42, color: '126, 226, 192', alpha: 0.05 },
+  { x: 0.82, y: 0.3, radius: 0.38, color: '201, 155, 255', alpha: 0.055 },
+  { x: 0.62, y: 0.85, radius: 0.45, color: '110, 150, 255', alpha: 0.04 },
+];
+
+const MAX_PER_LAYER = 340;
 const TWINKLE_FPS = 8;
 const METEOR_MIN_GAP_MS = 4200;
 const METEOR_CHANCE = 0.22;
@@ -56,6 +76,7 @@ export default function StarField() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canvases = Array.from(root.querySelectorAll<HTMLCanvasElement>('.starfield__layer'));
     const meteorCanvas = root.querySelector<HTMLCanvasElement>('.starfield__meteors');
+    const nebulaCanvas = root.querySelector<HTMLCanvasElement>('.starfield__nebula');
     const meteorContext = meteorCanvas?.getContext('2d') ?? null;
 
     let layers: Star[][] = [];
@@ -85,19 +106,56 @@ export default function StarField() {
         const layer = LAYERS[index] ?? LAYERS[0]!;
         const count = Math.min(MAX_PER_LAYER, Math.round(width * height * layer.density));
 
-        return Array.from({ length: count }, (_, star) => ({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          // Мелкие преобладают: равномерный размер читается как шум.
-          radius: 0.3 + Math.random() ** 3 * layer.maxRadius,
-          alpha: layer.alpha * (0.4 + Math.random() * 0.6),
-          phase: (star / Math.max(1, count)) * Math.PI * 2 + Math.random(),
-          speed: 0.4 + Math.random() * 0.8,
-        }));
+        return Array.from({ length: count }, (_, star) => {
+          const radius = 0.3 + Math.random() ** 3 * layer.maxRadius;
+
+          return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            // Мелкие преобладают: равномерный размер читается как шум.
+            radius,
+            alpha: layer.alpha * (0.4 + Math.random() * 0.6),
+            phase: (star / Math.max(1, count)) * Math.PI * 2 + Math.random(),
+            speed: 0.4 + Math.random() * 0.8,
+            color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)] ?? '#ffffff',
+            halo: radius > layer.maxRadius * 0.62,
+          };
+        });
       });
 
       if (meteorCanvas) {
         sizeCanvas(meteorCanvas);
+      }
+
+      drawNebula();
+    };
+
+    /** Туманность статична: её незачем перерисовывать каждый кадр. */
+    const drawNebula = () => {
+      const canvas = nebulaCanvas;
+      const context = canvas?.getContext('2d');
+      if (!canvas || !context) {
+        return;
+      }
+
+      const { width, height } = canvas.getBoundingClientRect();
+      context.clearRect(0, 0, width, height);
+
+      for (const cloud of NEBULAE) {
+        const radius = Math.max(width, height) * cloud.radius;
+        const gradient = context.createRadialGradient(
+          width * cloud.x,
+          height * cloud.y,
+          0,
+          width * cloud.x,
+          height * cloud.y,
+          radius,
+        );
+        gradient.addColorStop(0, `rgba(${cloud.color}, ${cloud.alpha})`);
+        gradient.addColorStop(1, `rgba(${cloud.color}, 0)`);
+
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, width, height);
       }
     };
 
@@ -111,14 +169,33 @@ export default function StarField() {
 
         const { width, height } = canvas.getBoundingClientRect();
         context.clearRect(0, 0, width, height);
-        context.fillStyle = '#ffffff';
 
         for (const star of stars) {
           const twinkle = prefersReduced
             ? 1
             : 0.6 + 0.4 * Math.sin((time / 1000) * star.speed + star.phase);
 
+          // Гало у крупных звёзд: мягкий ореол вокруг ядра.
+          if (star.halo) {
+            const glow = context.createRadialGradient(
+              star.x,
+              star.y,
+              0,
+              star.x,
+              star.y,
+              star.radius * 5,
+            );
+            glow.addColorStop(0, star.color);
+            glow.addColorStop(1, 'transparent');
+            context.globalAlpha = star.alpha * twinkle * 0.28;
+            context.fillStyle = glow;
+            context.beginPath();
+            context.arc(star.x, star.y, star.radius * 5, 0, Math.PI * 2);
+            context.fill();
+          }
+
           context.globalAlpha = star.alpha * twinkle;
+          context.fillStyle = star.color;
           context.beginPath();
           context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
           context.fill();
@@ -249,6 +326,7 @@ export default function StarField() {
 
   return (
     <div ref={rootRef} className="starfield" aria-hidden="true">
+      <canvas className="starfield__nebula" />
       <canvas className="starfield__layer starfield__layer--far" />
       <canvas className="starfield__layer starfield__layer--mid" />
       <canvas className="starfield__layer starfield__layer--near" />

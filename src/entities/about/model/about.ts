@@ -1,6 +1,16 @@
+export type MigrationRow = {
+  kind: 'del' | 'add';
+  text: string;
+};
+
 export const about = {
-  intro:
-    'Frontend-разработчик с коммерческим опытом в продуктовой разработке CRM и внутренних сервисов. Сильная сторона — аккуратная миграция легаси JavaScript на React/TypeScript без остановки развития продукта.',
+  /** Переход от легаси к современному стеку — показывается как дифф. */
+  migration: [
+    { kind: 'del', text: 'легаси JavaScript, дублирование бизнес-логики' },
+    { kind: 'add', text: 'React 19 + TypeScript, архитектура Feature-Sliced Design' },
+    { kind: 'add', text: 'Vitest, Playwright, Storybook — миграция без регрессий' },
+  ] as MigrationRow[],
+
   points: [
     'Проектирую компонентную архитектуру и понятный слой данных для долгой поддержки проекта.',
     'Работаю со сложными интерфейсами: расписания, карточки визитов, формы, статусы, фильтрация.',

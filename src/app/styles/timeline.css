@@ -1,0 +1,388 @@
+/*
+ * Дорожки опыта и проектов.
+ * У опыта есть настоящая шкала времени — позиции считает computeTimelineSpans.
+ * У проектов шкалы нет: дат начала и конца в данных нет, и рисовать их
+ * наугад значило бы выдумывать факты. Дорожки там группируют по категориям.
+ */
+
+.timeline__axis {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: var(--dim);
+}
+
+.timeline__ticks {
+  display: grid;
+}
+
+.timeline__ticks span {
+  padding: 0 0 0.5rem 0.5rem;
+  border-left: 1px solid var(--line);
+}
+
+.lane {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  border-top: 1px solid var(--line);
+}
+
+.lane__label {
+  padding: 0.9rem 0.8rem 0.9rem 0;
+  border-right: 1px solid var(--line);
+}
+
+.lane__company {
+  font-size: var(--step--1);
+  font-weight: 620;
+  color: var(--head);
+}
+
+.lane__role {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  color: var(--dim);
+  margin-top: 0.2rem;
+}
+
+.lane__track {
+  position: relative;
+  padding: 0.7rem 0;
+  min-height: 5.4rem;
+  background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 20% 100%;
+}
+
+/*
+ * Блок на шкале. Свёрнутый показывает только период: ширина у него
+ * пропорциональна длительности, и у короткой работы текст в неё не влезет.
+ * По наведению и по фокусу блок расширяется до читаемой ширины и
+ * раскрывает содержимое.
+ */
+.lane__block {
+  position: absolute;
+  top: 0.7rem;
+  min-height: 3.9rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  background: var(--panel);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.6rem 0.8rem;
+  /* Свёрнутый блок уже своего содержимого — лишнее обрезается,
+     а не торчит наружу во время сворачивания. */
+  overflow: hidden;
+  cursor: default;
+  transition:
+    min-width 260ms cubic-bezier(0.33, 0, 0.2, 1),
+    box-shadow 260ms ease,
+    border-color 200ms ease;
+}
+
+.lane__block--past {
+  border-left-color: var(--violet);
+}
+
+.lane__block--intern {
+  border-left-color: var(--dim);
+}
+
+.lane__block:hover,
+.lane__block:focus-within {
+  /* Узкие блоки стоят в левой части шкалы, поэтому расширение вправо
+     не выходит за пределы дорожки. */
+  min-width: 23rem;
+  max-width: 100%;
+  z-index: 5;
+  border-color: var(--teal);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 45%);
+}
+
+.lane__block--past:hover,
+.lane__block--past:focus-within {
+  border-color: var(--violet);
+}
+
+html:not(.dark) .lane__block:hover,
+html:not(.dark) .lane__block:focus-within {
+  box-shadow: 0 18px 40px rgb(15 23 42 / 16%);
+}
+
+.lane__period {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lane__now {
+  color: var(--teal);
+}
+
+/*
+ * Содержимое остаётся в DOM — скринридер читает его всегда, скрыт только
+ * визуальный слой.
+ *
+ * Высота анимируется через grid-template-rows 0fr → 1fr, а не max-height.
+ * max-height пришлось бы задавать с запасом, и первую половину анимации
+ * ничего бы не происходило: пока значение падает от запаса до реальной
+ * высоты, содержимое стоит на месте. Из-за этого блок схлопывался сначала
+ * по горизонтали и только потом по вертикали.
+ *
+ * Ширина фиксированная и не зависит от ширины блока: иначе при сворачивании
+ * текст переносился бы по одной букве в строку.
+ */
+.lane__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 21rem;
+  opacity: 0;
+  transition:
+    grid-template-rows 260ms cubic-bezier(0.33, 0, 0.2, 1),
+    margin-top 260ms cubic-bezier(0.33, 0, 0.2, 1),
+    opacity 110ms ease;
+}
+
+.lane__body-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.lane__block:hover .lane__body,
+.lane__block:focus-within .lane__body {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 0.5rem;
+  transition:
+    grid-template-rows 260ms cubic-bezier(0.33, 0, 0.2, 1),
+    margin-top 260ms cubic-bezier(0.33, 0, 0.2, 1),
+    opacity 200ms ease 90ms;
+}
+
+.lane__summary {
+  font-size: var(--step--1);
+  color: var(--head);
+  font-weight: 560;
+}
+
+.lane__bullets {
+  margin: 0.5rem 0 0;
+  padding-left: 1rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+  display: grid;
+  gap: 0.25rem;
+}
+
+/*
+ * Там, где наведения не бывает — тач-экраны, — раскрывать нечем.
+ * Дорожки разворачиваются в обычный список с открытым текстом.
+ */
+@media (hover: none) {
+  .lane {
+    grid-template-columns: 1fr;
+  }
+
+  .lane__label {
+    border-right: 0;
+    padding: 0.8rem 0 0.4rem;
+  }
+
+  .lane__track {
+    position: static;
+    min-height: 0;
+    padding: 0 0 0.8rem;
+    background-image: none;
+  }
+
+  .lane__block {
+    position: static;
+    width: auto !important;
+    left: auto !important;
+    min-height: 0;
+  }
+
+  .lane__body {
+    width: auto;
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Дорожки проектов: те же полосы, но без шкалы времени. */
+.plane {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  border-top: 1px solid var(--line);
+}
+
+.plane__label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  color: var(--dim);
+  padding: 1.1rem 0.8rem 1.1rem 0;
+  border-right: 1px solid var(--line);
+}
+
+.plane__track {
+  padding: 0.7rem 0 0.7rem 0.9rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.pblock {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  background: var(--panel);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.85rem 1rem;
+}
+
+.pblock--pet {
+  border-left-color: var(--violet);
+}
+
+.pblock--team {
+  border-left-color: var(--amber);
+}
+
+.pblock__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.pblock__title {
+  font-size: var(--step-1);
+  font-weight: 620;
+}
+
+.pblock__badge {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 14%, transparent);
+  border-radius: var(--radius-sm);
+  padding: 0.1rem 0.4rem;
+}
+
+.pblock__desc {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+.pblock__figures {
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  color: var(--dim);
+}
+
+.pblock__figure-value {
+  display: block;
+  font-size: var(--step-1);
+  color: var(--head);
+  font-weight: 620;
+  font-variant-numeric: tabular-nums;
+}
+
+.pblock__actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-top: 0.9rem;
+}
+
+.project-filters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+
+.project-filter {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.project-filter:hover {
+  color: var(--head);
+  border-color: var(--teal);
+}
+
+.project-filter--active {
+  color: var(--teal);
+  border-color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 12%, transparent);
+}
+
+/*
+ * На узком экране абсолютное позиционирование по шкале нечитаемо:
+ * дорожки разворачиваются в обычный список.
+ */
+@media (max-width: 760px) {
+  .timeline__axis {
+    display: none;
+  }
+
+  .lane,
+  .plane {
+    grid-template-columns: 1fr;
+  }
+
+  .lane__label,
+  .plane__label {
+    border-right: 0;
+    padding: 0.8rem 0 0.4rem;
+  }
+
+  /* На узком экране шкала не читается: блоки идут списком. */
+  .lane__track {
+    position: static;
+    min-height: 0;
+    padding: 0 0 0.8rem;
+    background-image: none;
+  }
+
+  .lane__block {
+    position: static;
+    width: auto !important;
+    left: auto !important;
+    min-height: 0;
+  }
+
+  .lane__body {
+    width: auto;
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 0.5rem;
+  }
+
+  .plane__track {
+    padding-left: 0;
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-filter,
+  .lane__block,
+  .lane__body {
+    transition: none;
+  }
+}

@@ -1,0 +1,221 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--head);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.container {
+  width: 100%;
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.section {
+  position: relative;
+  padding: 2.8rem 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+/*
+ * Вместо появления блоков по прокрутке — линия, которая прочерчивается
+ * по верху секции.
+ *
+ * Разница принципиальная: прежний эффект срабатывал один раз и до этого
+ * держал контент в opacity 0, то есть без JS страница была пустой.
+ * Здесь анимация привязана к позиции прокрутки, обратима и ничего не
+ * скрывает — текст читается всегда, даже если эффект не поддерживается.
+ */
+.section::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--violet) 70%, transparent);
+  transform-origin: 0 50%;
+  /* Базовое состояние — линия не нарисована. Под ней остаётся обычная
+     граница секции, поэтому при отсутствии поддержки ничего не ломается. */
+  transform: scaleX(0);
+}
+
+@supports (animation-timeline: view()) {
+  .section::before {
+    animation: drawEdge linear both;
+    animation-timeline: view();
+    /* cover предсказуем и для коротких секций, и для тех, что выше экрана:
+       отсчёт идёт от момента, когда секция появилась, до 30% её прохода. */
+    animation-range: cover 0% cover 30%;
+  }
+}
+
+@keyframes drawEdge {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.section:first-child {
+  border-top: 0;
+}
+
+/* Моноширинная надпись над заголовком раздела. */
+.section__label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  letter-spacing: 0.06em;
+  color: var(--dim);
+  margin-bottom: 0.7rem;
+}
+
+.section__title {
+  font-size: var(--step-2);
+  font-weight: 640;
+  margin-bottom: 1.3rem;
+}
+
+.prose {
+  max-width: var(--measure);
+  color: var(--muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.btn:hover {
+  border-color: var(--teal);
+  color: var(--head);
+}
+
+.btn--primary {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.btn--primary:hover {
+  color: var(--on-accent);
+  filter: brightness(1.08);
+}
+
+/* Полоса прогресса чтения под шапкой. */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 100;
+  background: var(--teal);
+  transform: scaleX(var(--scroll-progress));
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .section::before {
+    animation: none;
+    transform: scaleX(1);
+    opacity: 0.4;
+  }
+
+}
+
+/* Текст только для скринридеров. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Ссылка для клавиатуры: видна только при фокусе. */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -4rem;
+  z-index: 200;
+  padding: 0.55rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--teal);
+  color: var(--on-accent);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 160ms ease;
+}
+
+.skip-link:focus-visible {
+  top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+}

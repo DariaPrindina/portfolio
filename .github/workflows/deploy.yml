@@ -5,7 +5,36 @@ on:
     branches: [main]
 
 jobs:
+  # Проверки продублированы здесь намеренно: пока деплой зависел от отдельного
+  # workflow, прямой push в main выкатывался без единой проверки.
+  # Теперь job deploy физически не может стартовать, пока этот не позеленеет.
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run checks
+        run: npm run check
+
+      - name: Run tests
+        run: npm run test
+
+      - name: Verify production build
+        run: npm run build
+
   deploy:
+    needs: quality
     runs-on: ubuntu-latest
     concurrency:
       group: deploy-main
@@ -23,11 +52,22 @@ jobs:
           username: ${{ secrets.VDS_USER }}
           key: ${{ secrets.VDS_SSH_PRIVATE_KEY }}
           script: |
+            set -e
             cd /var/www/portfolio
             git pull origin main
-            docker compose down
-            docker compose build --no-cache
-            docker compose up -d --force-recreate
+
+            # Образ собирается, пока старый контейнер продолжает отвечать.
+            # Раньше здесь стоял docker compose down перед сборкой, и сайт
+            # лежал всё время пересборки, а не пару секунд.
+            docker compose build
+
+            # Единственный момент недоступности — подмена контейнера.
+            # --wait держит шаг до тех пор, пока healthcheck не позеленеет,
+            # поэтому неудачная выкатка не пройдёт молча.
+            docker compose up -d --force-recreate --wait
+
+            # Старые слои иначе копятся и забивают диск VDS.
+            docker image prune -f
             echo "Deploy completed at $(date)"
 
       - name: Send Telegram Notification

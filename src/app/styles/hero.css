@@ -1,0 +1,304 @@
+.hero {
+  padding: 3.2rem 0 2.8rem;
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+.hero__role {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  color: var(--teal);
+  margin-bottom: 0.7rem;
+}
+
+.hero__role span {
+  color: var(--dim);
+}
+
+.hero__title {
+  font-size: var(--step-4);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 0.8rem;
+}
+
+.hero__description {
+  color: var(--muted);
+  font-size: var(--step-1);
+  max-width: var(--measure);
+  margin-bottom: 1.5rem;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.social-list {
+  display: flex;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0 0 1.7rem;
+  padding: 0;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.social-link:hover {
+  color: var(--teal);
+  border-color: var(--teal);
+}
+
+/* Плитки фактов: сетка на разделителях из фона, без внутренних отступов между. */
+.hero__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.hero__fact {
+  background: var(--panel);
+  padding: 0.85rem 1rem;
+}
+
+.hero__fact-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 0.25rem;
+}
+
+.hero__fact-value {
+  font-size: var(--step-2);
+  font-weight: 650;
+  color: var(--head);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__fact-note {
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-link {
+    transition: none;
+  }
+}
+
+/* --- Космический слой --- */
+
+/*
+ * Звёздное поле только в тёмной теме: на светлом фоне точки читаются как сор.
+ * Видимостью управляет CSS, а не состояние React, — так поле не мигает
+ * при гидратации.
+ */
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+html.dark .starfield {
+  opacity: 0.7;
+}
+
+.starfield__layer,
+.starfield__meteors,
+.starfield__nebula {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Туманность идёт самым дальним планом и почти не двигается. */
+.starfield__nebula {
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -18px), 0);
+}
+
+/*
+ * Параллакс: слои уезжают вверх на разную величину по мере прокрутки.
+ * Сдвиг делает CSS через transform — он композитится на GPU, поэтому
+ * перерисовывать canvas на каждый кадр прокрутки не нужно.
+ * Переменную --scroll-progress (0…1) обновляет MotionEffects.
+ */
+.starfield__layer--far {
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -40px), 0);
+}
+
+.starfield__layer--mid {
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -120px), 0);
+}
+
+.starfield__layer--near {
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -260px), 0);
+  /* Ближний план чуть уходит из фокуса, усиливая ощущение глубины. */
+  opacity: 0.85;
+}
+
+/* Контент лежит выше поля, иначе звёзды попадали бы на текст. */
+.container,
+.site-header,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.hero__main {
+  min-width: 0;
+}
+
+.hero__portrait {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.hero__avatar-ring {
+  position: relative;
+  display: block;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.hero__avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Планета на орбите — точка на краю кольца, вращается вместе с ним. */
+.hero__orbit::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero__orbit--outer {
+  width: 252px;
+  height: 252px;
+  border: 1px dashed color-mix(in srgb, var(--teal) 30%, transparent);
+  animation: orbitSpin 26s linear infinite;
+}
+
+.hero__orbit--outer::before {
+  width: 7px;
+  height: 7px;
+  background: var(--teal);
+}
+
+.hero__orbit--inner {
+  width: 196px;
+  height: 196px;
+  border: 1px solid color-mix(in srgb, var(--violet) 26%, transparent);
+  animation: orbitSpin 17s linear infinite reverse;
+}
+
+.hero__orbit--inner::before {
+  width: 5px;
+  height: 5px;
+  background: var(--violet);
+}
+
+@keyframes orbitSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (max-width: 860px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .hero__portrait {
+    order: -1;
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero__orbit--outer {
+    width: 194px;
+    height: 194px;
+  }
+
+  .hero__orbit--inner {
+    width: 152px;
+    height: 152px;
+  }
+
+  .hero__avatar-ring {
+    width: 116px;
+    height: 116px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield {
+    transition: none;
+  }
+
+  /* Без движения слои стоят на месте: параллакс — тоже анимация. */
+  .starfield__nebula,
+  .starfield__layer--far,
+  .starfield__layer--mid,
+  .starfield__layer--near {
+    transform: none;
+  }
+
+  .hero__orbit--outer,
+  .hero__orbit--inner {
+    animation: none;
+  }
+}

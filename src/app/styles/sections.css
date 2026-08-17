@@ -1,0 +1,328 @@
+/* --- Обо мне: грамматика диффа. Знаки +/- несут смысл сами,
+   поэтому цвет не единственный носитель информации. --- */
+.about__diff {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  line-height: 1.9;
+  margin-bottom: 1.4rem;
+}
+
+.about__row {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.25rem 0.9rem;
+}
+
+.about__row--del {
+  background: var(--del-bg);
+}
+
+.about__row--add {
+  background: var(--add-bg);
+}
+
+.about__sign {
+  width: 1ch;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+
+.about__row--del .about__sign {
+  color: var(--del);
+}
+
+.about__row--add .about__sign {
+  color: var(--add);
+}
+
+.about__points {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 42rem;
+}
+
+.about__points li {
+  position: relative;
+  padding-left: 1.3rem;
+  color: var(--muted);
+}
+
+.about__points li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--teal);
+}
+
+/* --- Навыки: группы по роли в стеке вместо кучи иконок --- */
+.skills__groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.skills__group {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem 1.1rem;
+  background: var(--panel);
+}
+
+.skills__group-title {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+
+.skills__group--core .skills__group-title {
+  color: var(--teal);
+}
+
+.skills__group--data .skills__group-title {
+  color: var(--violet);
+}
+
+.skills__group--quality .skills__group-title {
+  color: var(--amber);
+}
+
+.skills__list {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+}
+
+.skills__list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+.skills__logo {
+  width: 14px;
+  height: 14px;
+}
+
+/* --- Образование и сертификаты --- */
+.edu__row {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 0.8rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.edu__year {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.edu__degree {
+  font-size: var(--step-0);
+  font-weight: 580;
+  color: var(--head);
+}
+
+.edu__place {
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+
+.edu__actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* --- GitHub --- */
+.github__kpi {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.github__kpi-item {
+  background: var(--panel);
+  padding: 0.9rem 1rem;
+}
+
+.github__kpi-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 0.2rem;
+}
+
+.github__kpi-value {
+  font-size: var(--step-3);
+  font-weight: 650;
+  color: var(--head);
+  font-variant-numeric: tabular-nums;
+}
+
+.github__repos {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.github__repo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  padding: 0.7rem 0.9rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 160ms ease;
+}
+
+.github__repo-link:hover {
+  border-color: var(--teal);
+}
+
+.github__repo-link span {
+  margin-left: auto;
+  color: var(--dim);
+  font-size: 0.7rem;
+}
+
+.github__fallback {
+  color: var(--muted);
+}
+
+/* --- Резюме --- */
+.docs {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.doc {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  padding: 0.7rem 0.9rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 160ms ease;
+}
+
+.doc:hover {
+  border-color: var(--teal);
+}
+
+.doc__type {
+  color: var(--amber);
+  flex-shrink: 0;
+}
+
+.doc__action {
+  margin-left: auto;
+  color: var(--dim);
+  font-size: 0.7rem;
+}
+
+.resume__actions,
+.contact__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.contact__meta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  color: var(--dim);
+}
+
+/* --- Подвал --- */
+.footer {
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+  padding: 1.4rem 0 2.2rem;
+}
+
+.footer__inner {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  color: var(--dim);
+}
+
+.footer__nav {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.footer__nav a {
+  color: var(--dim);
+  text-decoration: none;
+}
+
+.footer__nav a:hover {
+  color: var(--teal);
+}
+
+@media (max-width: 640px) {
+  .edu__row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .footer__nav {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .github__repo-link,
+  .doc {
+    transition: none;
+  }
+}

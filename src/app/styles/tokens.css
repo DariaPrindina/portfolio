@@ -1,0 +1,69 @@
+/*
+ * Единственная система тем в проекте.
+ * Раньше их было три: theme-classic, theme-cosmic и next-themes.
+ * Светлая тема — значения по умолчанию, тёмная переопределяет только токены.
+ */
+
+:root {
+  color-scheme: light;
+
+  --bg: #f6f8fb;
+  --panel: #ffffff;
+  --panel-2: #eef1f6;
+  --line: #dfe4ed;
+
+  --head: #10141b;
+  --text: #39414f;
+  --muted: #5d6879;
+  --dim: #636e80;
+
+  --teal: #0d7a5e;
+  --violet: #6b3fa0;
+  --amber: #96560e;
+
+  --add: #1f7a45;
+  --del: #a8352c;
+  --add-bg: rgba(31, 122, 69, 0.1);
+  --del-bg: rgba(168, 53, 44, 0.1);
+
+  --on-accent: #ffffff;
+
+  --radius: 8px;
+  --radius-sm: 4px;
+  --header-height: 60px;
+  --measure: 34rem;
+
+  --step--1: 0.82rem;
+  --step-0: 1rem;
+  --step-1: 1.15rem;
+  --step-2: 1.3rem;
+  --step-3: clamp(1.5rem, 3vw, 1.9rem);
+  --step-4: clamp(2rem, 5vw, 2.7rem);
+
+  --scroll-progress: 0;
+}
+
+html.dark {
+  color-scheme: dark;
+
+  --bg: #0f1117;
+  --panel: #161a23;
+  --panel-2: #12151d;
+  --line: #262d3b;
+
+  --head: #f2f5fa;
+  --text: #cfd6e1;
+  --muted: #97a2b3;
+  --dim: #778395;
+
+  --teal: #7ee2c0;
+  --violet: #c99bff;
+  --amber: #ffb86b;
+
+  --add: #4fb377;
+  --del: #d4675f;
+  --add-bg: rgba(79, 179, 119, 0.12);
+  --del-bg: rgba(212, 103, 95, 0.12);
+
+  --on-accent: #0f1117;
+}

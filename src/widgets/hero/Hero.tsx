@@ -1,54 +1,45 @@
-import { ArrowRight, Github, Linkedin, Mail, Send } from 'lucide-react';
+import { ArrowRight, Github, Mail, Send } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { profile } from '@/entities/profile/model/profile';
+import { getContent, type Locale } from '@/entities/locale/model/content';
+import { SECTION_IDS } from '@/shared/config/sections';
 
-export default function Hero() {
+export default function Hero({ locale = 'ru' }: { locale?: Locale }) {
+  const { profile, hero } = getContent(locale);
+
   return (
-    <section id="about" className="hero section" data-reveal="up">
-      <div className="hero__avatar-wrap" data-reveal="zoom">
-        <span className="hero__avatar-mask">
-          <Image
-            src={profile.avatar}
-            alt={profile.name}
-            className="hero__avatar"
-            width={180}
-            height={180}
-            sizes="180px"
-            priority
-          />
-        </span>
-        <span className="hero__orbit hero__orbit--a" aria-hidden="true" />
-        <span className="hero__orbit hero__orbit--b" aria-hidden="true" />
-        <span className="hero__orbit hero__orbit--c" aria-hidden="true" />
-        <span className="hero__orbit hero__orbit--d" aria-hidden="true" />
-        <span className="hero__orbit hero__orbit--e" aria-hidden="true" />
-      </div>
-
-      <p className="hero__eyebrow" data-reveal="up">
+    <section id={SECTION_IDS.hero} className="hero">
+      <div className="hero__grid">
+        <div className="hero__main">
+      <p className="hero__role">
+        <span>const</span> role = <span>&apos;</span>
         {profile.role}
+        <span>&apos;</span>
       </p>
-      <h1 className="hero__title" data-reveal="up">
+      <h1 className="hero__title">
         {profile.name}
       </h1>
-      <p className="hero__description" data-reveal="up">
+      <p className="hero__description">
         {profile.tagline}
       </p>
 
-      <div className="hero__actions" data-reveal="up">
-        <Link href="#experience" className="btn btn--ghost">
-          Опыт
-        </Link>
-        <Link href="#projects" className="btn btn--primary">
-          Проекты
-          <ArrowRight size={18} aria-hidden="true" />
-        </Link>
-        <Link href="#contact" className="btn btn--ghost">
-          Связаться
-        </Link>
+      <div className="hero__actions">
+        <a href="#projects" className="btn btn--primary">
+          {hero.actions.projects}
+          <ArrowRight size={15} aria-hidden="true" />
+        </a>
+        <a href="#experience" className="btn">
+          {hero.actions.experience}
+        </a>
+        <a href="#resume" className="btn">
+          {hero.actions.resume}
+        </a>
+        <a href="#contact" className="btn">
+          {hero.actions.contact}
+        </a>
       </div>
 
-      <ul className="social-list" aria-label="Социальные ссылки" data-reveal="up">
+      <ul className="social-list" aria-label={hero.socialAria}>
         <li>
           <Link
             href={profile.github}
@@ -57,25 +48,12 @@ export default function Hero() {
             className="social-link"
             aria-label="GitHub"
           >
-            <Github size={22} aria-hidden="true" />
+            <Github size={18} aria-hidden="true" />
           </Link>
         </li>
-        {profile.linkedin ? (
-          <li>
-            <Link
-              href={profile.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-link"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={22} aria-hidden="true" />
-            </Link>
-          </li>
-        ) : null}
         <li>
           <Link href={`mailto:${profile.email}`} className="social-link" aria-label="Email">
-            <Mail size={22} aria-hidden="true" />
+            <Mail size={18} aria-hidden="true" />
           </Link>
         </li>
         <li>
@@ -86,10 +64,40 @@ export default function Hero() {
             className="social-link"
             aria-label="Telegram"
           >
-            <Send size={22} aria-hidden="true" />
+            <Send size={18} aria-hidden="true" />
           </Link>
         </li>
       </ul>
+
+      <div className="hero__facts">
+        {hero.facts.map((fact) => (
+          <article key={fact.label} className="hero__fact">
+            <p className="hero__fact-label">{fact.label}</p>
+            <p className="hero__fact-value">{fact.value}</p>
+            <p className="hero__fact-note">{fact.note}</p>
+          </article>
+        ))}
+      </div>
+        </div>
+
+        {/* Орбиты — тонкая геометрия, а не свечение: так они попадают
+            в тот же язык, что шкала времени и рамки панелей. */}
+        <div className="hero__portrait">
+          <span className="hero__orbit hero__orbit--outer" aria-hidden="true" />
+          <span className="hero__orbit hero__orbit--inner" aria-hidden="true" />
+          <span className="hero__avatar-ring">
+            <Image
+              src={profile.avatar}
+              alt={profile.name}
+              className="hero__avatar"
+              width={180}
+              height={180}
+              sizes="180px"
+              priority
+            />
+          </span>
+        </div>
+      </div>
     </section>
   );
 }

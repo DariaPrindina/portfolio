@@ -1,34 +1,40 @@
-import type { CSSProperties } from 'react';
 import Image from 'next/image';
-import type { Skill } from '@/entities/skill/model/skills';
+import { findSkillLogo, type SkillGroup } from '@/entities/skill/model/skills';
 
 type SkillsListProps = {
-  skills: Skill[];
-  ariaLabel: string;
+  groups: SkillGroup[];
 };
 
-export default function SkillsList({ skills, ariaLabel }: SkillsListProps) {
+export default function SkillsList({ groups }: SkillsListProps) {
   return (
-    <ul className="chip-list" aria-label={ariaLabel}>
-      {skills.map((skill, index) => (
-        <li
-          key={skill.name}
-          className="chip-list__item"
-          data-reveal="up"
-          style={{ '--reveal-delay': `${index * 50}ms` } as CSSProperties}
-        >
-          <Image
-            src={skill.logo}
-            alt={`${skill.name} logo`}
-            className="chip-list__logo"
-            width={18}
-            height={18}
-            sizes="18px"
-            unoptimized
-          />
-          <span>{skill.name}</span>
-        </li>
+    <div className="skills__groups">
+      {groups.map((group) => (
+        <article key={group.id} className={`skills__group skills__group--${group.id}`}>
+          <h3 className="skills__group-title">{group.title}</h3>
+          <ul className="skills__list">
+            {group.items.map((item) => {
+              const logo = findSkillLogo(item);
+
+              return (
+                <li key={item}>
+                  {logo ? (
+                    <Image
+                      src={logo}
+                      alt=""
+                      className="skills__logo"
+                      width={14}
+                      height={14}
+                      sizes="14px"
+                      unoptimized
+                    />
+                  ) : null}
+                  {item}
+                </li>
+              );
+            })}
+          </ul>
+        </article>
       ))}
-    </ul>
+    </div>
   );
 }

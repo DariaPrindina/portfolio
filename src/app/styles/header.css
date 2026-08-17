@@ -1,0 +1,136 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 95;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease;
+}
+
+.site-header--scrolled {
+  border-bottom-color: var(--line);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.site-header__brand {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-weight: 700;
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  color: var(--head);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  margin-inline: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.site-header__nav::-webkit-scrollbar {
+  display: none;
+}
+
+.site-header__link {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--dim);
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.site-header__link:hover {
+  color: var(--head);
+  background: var(--panel-2);
+}
+
+.site-header__link--active {
+  color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 14%, transparent);
+}
+
+.site-header__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.site-header__nav + .site-header__controls {
+  margin-left: 0;
+}
+
+.visual-theme-toggle,
+.visual-language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: var(--step--1);
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.visual-theme-toggle:hover,
+.visual-language-toggle:hover {
+  color: var(--head);
+  border-color: var(--teal);
+}
+
+@media (max-width: 720px) {
+  .site-header__nav {
+    margin-inline: 0;
+  }
+
+  .visual-theme-toggle__label,
+  .visual-language-toggle__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .site-header__link,
+  .visual-theme-toggle,
+  .visual-language-toggle {
+    transition: none;
+  }
+}
+
+/* Иконка и подпись переключателя выбираются классом темы на <html>,
+   а не состоянием React — так нет расхождения при гидратации. */
+.theme-icon--dark {
+  display: none;
+}
+
+html.dark .theme-icon--light {
+  display: none;
+}
+
+html.dark .theme-icon--dark {
+  display: inline-flex;
+}

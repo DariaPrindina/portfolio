@@ -69,6 +69,9 @@
   background: var(--panel);
   border-radius: 0 var(--radius) var(--radius) 0;
   padding: 0.6rem 0.8rem;
+  /* Свёрнутый блок уже своего содержимого — лишнее обрезается,
+     а не торчит наружу во время сворачивания. */
+  overflow: hidden;
   cursor: default;
   transition:
     min-width 260ms cubic-bezier(0.33, 0, 0.2, 1),
@@ -118,15 +121,25 @@ html:not(.dark) .lane__block:focus-within {
   color: var(--teal);
 }
 
-/* Содержимое остаётся в DOM — скринридер читает его всегда, скрыт только
-   визуальный слой. */
+/*
+ * Содержимое остаётся в DOM — скринридер читает его всегда, скрыт только
+ * визуальный слой.
+ *
+ * Ширина фиксированная и не зависит от ширины блока. Иначе при сворачивании
+ * блок ужимается до своей доли на шкале быстрее, чем исчезает текст, и тот
+ * на лету переносится по одной букве в строку — заметное промигивание.
+ * С фиксированной шириной переносить нечего: содержимое просто обрезается
+ * по overflow.
+ */
 .lane__body {
+  width: 21rem;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
+  /* Сворачивание: текст гаснет быстро и раньше, чем блок ужимается. */
   transition:
-    max-height 260ms cubic-bezier(0.33, 0, 0.2, 1),
-    opacity 200ms ease;
+    max-height 240ms cubic-bezier(0.33, 0, 0.2, 1),
+    opacity 110ms ease;
 }
 
 .lane__block:hover .lane__body,
@@ -134,6 +147,10 @@ html:not(.dark) .lane__block:focus-within {
   max-height: 16rem;
   opacity: 1;
   margin-top: 0.5rem;
+  /* Раскрытие: текст появляется, когда блок уже разъехался. */
+  transition:
+    max-height 260ms cubic-bezier(0.33, 0, 0.2, 1),
+    opacity 200ms ease 90ms;
 }
 
 .lane__summary {
@@ -180,6 +197,7 @@ html:not(.dark) .lane__block:focus-within {
   }
 
   .lane__body {
+    width: auto;
     max-height: none;
     opacity: 1;
     margin-top: 0.5rem;
@@ -341,6 +359,7 @@ html:not(.dark) .lane__block:focus-within {
   }
 
   .lane__body {
+    width: auto;
     max-height: none;
     opacity: 1;
     margin-top: 0.5rem;

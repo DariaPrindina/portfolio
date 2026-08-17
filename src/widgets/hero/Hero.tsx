@@ -1,4 +1,5 @@
 import { ArrowRight, Github, Mail, Send } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getContent, type Locale } from '@/entities/locale/model/content';
 import { SECTION_IDS } from '@/shared/config/sections';
@@ -8,6 +9,8 @@ export default function Hero({ locale = 'ru' }: { locale?: Locale }) {
 
   return (
     <section id={SECTION_IDS.hero} className="hero" data-reveal="up">
+      <div className="hero__grid">
+        <div className="hero__main">
       <p className="hero__role" data-reveal="up">
         <span>const</span> role = <span>&apos;</span>
         {profile.role}
@@ -74,6 +77,26 @@ export default function Hero({ locale = 'ru' }: { locale?: Locale }) {
             <p className="hero__fact-note">{fact.note}</p>
           </article>
         ))}
+      </div>
+        </div>
+
+        {/* Орбиты — тонкая геометрия, а не свечение: так они попадают
+            в тот же язык, что шкала времени и рамки панелей. */}
+        <div className="hero__portrait" data-reveal="zoom">
+          <span className="hero__orbit hero__orbit--outer" aria-hidden="true" />
+          <span className="hero__orbit hero__orbit--inner" aria-hidden="true" />
+          <span className="hero__avatar-ring">
+            <Image
+              src={profile.avatar}
+              alt={profile.name}
+              className="hero__avatar"
+              width={180}
+              height={180}
+              sizes="180px"
+              priority
+            />
+          </span>
+        </div>
       </div>
     </section>
   );

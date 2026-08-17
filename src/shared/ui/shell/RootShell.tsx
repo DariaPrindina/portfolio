@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
+import StarField from '@/shared/ui/effects/StarField';
 import Footer from '@/widgets/footer/Footer';
 import Header from '@/widgets/header/Header';
 import { SITE_URL } from '@/shared/config/site';
@@ -64,6 +65,7 @@ export default function RootShell({ lang, children }: { lang: 'ru' | 'en'; child
           <style>{'[data-reveal]{opacity:1 !important;transform:none !important}'}</style>
         </noscript>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <StarField />
           <a className="skip-link" href="#content">
             {lang === 'en' ? 'Skip to content' : 'Перейти к содержимому'}
           </a>

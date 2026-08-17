@@ -104,3 +104,161 @@
     transition: none;
   }
 }
+
+/* --- Космический слой --- */
+
+/*
+ * Звёздное поле только в тёмной теме: на светлом фоне точки читаются как сор.
+ * Видимостью управляет CSS, а не состояние React, — так поле не мигает
+ * при гидратации.
+ */
+.starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+html.dark .starfield {
+  opacity: 0.5;
+}
+
+/* Контент лежит выше поля, иначе звёзды попадали бы на текст. */
+.container,
+.site-header,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.hero__main {
+  min-width: 0;
+}
+
+.hero__portrait {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.hero__avatar-ring {
+  position: relative;
+  display: block;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.hero__avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Планета на орбите — точка на краю кольца, вращается вместе с ним. */
+.hero__orbit::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero__orbit--outer {
+  width: 252px;
+  height: 252px;
+  border: 1px dashed color-mix(in srgb, var(--teal) 30%, transparent);
+  animation: orbitSpin 26s linear infinite;
+}
+
+.hero__orbit--outer::before {
+  width: 7px;
+  height: 7px;
+  background: var(--teal);
+}
+
+.hero__orbit--inner {
+  width: 196px;
+  height: 196px;
+  border: 1px solid color-mix(in srgb, var(--violet) 26%, transparent);
+  animation: orbitSpin 17s linear infinite reverse;
+}
+
+.hero__orbit--inner::before {
+  width: 5px;
+  height: 5px;
+  background: var(--violet);
+}
+
+@keyframes orbitSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media (max-width: 860px) {
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .hero__portrait {
+    order: -1;
+    width: 200px;
+    height: 200px;
+  }
+
+  .hero__orbit--outer {
+    width: 194px;
+    height: 194px;
+  }
+
+  .hero__orbit--inner {
+    width: 152px;
+    height: 152px;
+  }
+
+  .hero__avatar-ring {
+    width: 116px;
+    height: 116px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starfield {
+    transition: none;
+  }
+
+  .hero__orbit--outer,
+  .hero__orbit--inner {
+    animation: none;
+  }
+}

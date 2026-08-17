@@ -42,12 +42,28 @@ export default function MotionEffects() {
       }
     };
 
+    // Прогресс теперь двигает слои звёзд, поэтому чтение scrollHeight
+    // нельзя делать на каждом событии прокрутки — только раз в кадр.
+    let progressFrame = 0;
+    const onScroll = () => {
+      if (progressFrame) {
+        return;
+      }
+      progressFrame = window.requestAnimationFrame(() => {
+        progressFrame = 0;
+        updateScrollProgress();
+      });
+    };
+
     updateScrollProgress();
-    window.addEventListener('scroll', updateScrollProgress, { passive: true });
-    window.addEventListener('resize', updateScrollProgress);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     cleanupFns.push(() => {
-      window.removeEventListener('scroll', updateScrollProgress);
-      window.removeEventListener('resize', updateScrollProgress);
+      if (progressFrame) {
+        window.cancelAnimationFrame(progressFrame);
+      }
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
     });
 
 

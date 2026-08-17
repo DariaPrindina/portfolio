@@ -115,8 +115,6 @@
 .starfield {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
   pointer-events: none;
   opacity: 0;
@@ -124,7 +122,35 @@
 }
 
 html.dark .starfield {
-  opacity: 0.5;
+  opacity: 0.55;
+}
+
+.starfield__layer,
+.starfield__meteors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ * Параллакс: слои уезжают вверх на разную величину по мере прокрутки.
+ * Сдвиг делает CSS через transform — он композитится на GPU, поэтому
+ * перерисовывать canvas на каждый кадр прокрутки не нужно.
+ * Переменную --scroll-progress (0…1) обновляет MotionEffects.
+ */
+.starfield__layer--far {
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -40px), 0);
+}
+
+.starfield__layer--mid {
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -120px), 0);
+}
+
+.starfield__layer--near {
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -260px), 0);
+  /* Ближний план чуть уходит из фокуса, усиливая ощущение глубины. */
+  opacity: 0.85;
 }
 
 /* Контент лежит выше поля, иначе звёзды попадали бы на текст. */
@@ -255,6 +281,13 @@ html.dark .starfield {
 @media (prefers-reduced-motion: reduce) {
   .starfield {
     transition: none;
+  }
+
+  /* Без движения слои стоят на месте: параллакс — тоже анимация. */
+  .starfield__layer--far,
+  .starfield__layer--mid,
+  .starfield__layer--near {
+    transform: none;
   }
 
   .hero__orbit--outer,

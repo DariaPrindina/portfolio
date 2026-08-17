@@ -48,46 +48,92 @@
 
 .lane__track {
   position: relative;
-  padding: 0.7rem 0 1rem;
+  padding: 0.7rem 0;
+  min-height: 5.4rem;
   background-image: linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 20% 100%;
 }
 
-/* Полоса несёт только место на шкале: у короткой работы она шириной
-   в несколько десятков пикселей, и текст в неё не поместился бы. */
-.lane__bar {
+/*
+ * Блок на шкале. Свёрнутый показывает только период: ширина у него
+ * пропорциональна длительности, и у короткой работы текст в неё не влезет.
+ * По наведению и по фокусу блок расширяется до читаемой ширины и
+ * раскрывает содержимое.
+ */
+.lane__block {
   position: absolute;
   top: 0.7rem;
-  height: 22px;
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--teal) 30%, transparent);
+  min-height: 3.9rem;
+  border: 1px solid var(--line);
   border-left: 3px solid var(--teal);
+  background: var(--panel);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.6rem 0.8rem;
+  cursor: default;
+  transition:
+    min-width 260ms cubic-bezier(0.33, 0, 0.2, 1),
+    box-shadow 260ms ease,
+    border-color 200ms ease;
 }
 
-.lane__bar--past {
-  background: color-mix(in srgb, var(--violet) 26%, transparent);
+.lane__block--past {
   border-left-color: var(--violet);
 }
 
-.lane__bar--intern {
-  background: color-mix(in srgb, var(--dim) 28%, transparent);
+.lane__block--intern {
   border-left-color: var(--dim);
 }
 
-.lane__card {
-  margin-top: calc(22px + 1rem);
-  padding-left: 0.9rem;
+.lane__block:hover,
+.lane__block:focus-within {
+  /* Узкие блоки стоят в левой части шкалы, поэтому расширение вправо
+     не выходит за пределы дорожки. */
+  min-width: 23rem;
+  max-width: 100%;
+  z-index: 5;
+  border-color: var(--teal);
+  box-shadow: 0 18px 40px rgb(0 0 0 / 45%);
+}
+
+.lane__block--past:hover,
+.lane__block--past:focus-within {
+  border-color: var(--violet);
+}
+
+html:not(.dark) .lane__block:hover,
+html:not(.dark) .lane__block:focus-within {
+  box-shadow: 0 18px 40px rgb(15 23 42 / 16%);
 }
 
 .lane__period {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.68rem;
   color: var(--dim);
-  margin-bottom: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lane__now {
   color: var(--teal);
+}
+
+/* Содержимое остаётся в DOM — скринридер читает его всегда, скрыт только
+   визуальный слой. */
+.lane__body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 260ms cubic-bezier(0.33, 0, 0.2, 1),
+    opacity 200ms ease;
+}
+
+.lane__block:hover .lane__body,
+.lane__block:focus-within .lane__body {
+  max-height: 16rem;
+  opacity: 1;
+  margin-top: 0.5rem;
 }
 
 .lane__summary {
@@ -103,6 +149,41 @@
   color: var(--muted);
   display: grid;
   gap: 0.25rem;
+}
+
+/*
+ * Там, где наведения не бывает — тач-экраны, — раскрывать нечем.
+ * Дорожки разворачиваются в обычный список с открытым текстом.
+ */
+@media (hover: none) {
+  .lane {
+    grid-template-columns: 1fr;
+  }
+
+  .lane__label {
+    border-right: 0;
+    padding: 0.8rem 0 0.4rem;
+  }
+
+  .lane__track {
+    position: static;
+    min-height: 0;
+    padding: 0 0 0.8rem;
+    background-image: none;
+  }
+
+  .lane__block {
+    position: static;
+    width: auto !important;
+    left: auto !important;
+    min-height: 0;
+  }
+
+  .lane__body {
+    max-height: none;
+    opacity: 1;
+    margin-top: 0.5rem;
+  }
 }
 
 /* Дорожки проектов: те же полосы, но без шкалы времени. */
@@ -244,22 +325,25 @@
     padding: 0.8rem 0 0.4rem;
   }
 
-  /* На узком экране шкала не читается: полоса убирается,
-     остаётся карточка с периодом в тексте. */
+  /* На узком экране шкала не читается: блоки идут списком. */
   .lane__track {
+    position: static;
+    min-height: 0;
     padding: 0 0 0.8rem;
     background-image: none;
   }
 
-  .lane__bar {
-    display: none;
+  .lane__block {
+    position: static;
+    width: auto !important;
+    left: auto !important;
+    min-height: 0;
   }
 
-  .lane__card {
-    margin-top: 0;
-    padding-left: 0;
-    border-left: 3px solid var(--line);
-    padding-left: 0.8rem;
+  .lane__body {
+    max-height: none;
+    opacity: 1;
+    margin-top: 0.5rem;
   }
 
   .plane__track {
@@ -269,7 +353,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-filter {
+  .project-filter,
+  .lane__block,
+  .lane__body {
     transition: none;
   }
 }

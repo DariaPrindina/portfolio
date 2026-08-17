@@ -11,15 +11,15 @@ type ExperienceTimelineProps = {
 
 const BAR_MODIFIER: Record<ExperienceItem['kind'], string> = {
   current: '',
-  past: ' lane__bar--past',
-  internship: ' lane__bar--intern',
+  past: ' lane__block--past',
+  internship: ' lane__block--intern',
 };
 
 /**
- * Полоса и содержимое разделены намеренно.
- * Ширина полосы пропорциональна длительности, поэтому у двухмесячной работы
- * она всего несколько десятков пикселей — текст туда не помещается.
- * Полоса показывает место на шкале, карточка под ней читается при любой ширине.
+ * Блоки стоят на общей шкале времени, их ширина пропорциональна длительности.
+ * Свёрнутый блок показывает только период; текст раскрывается по наведению
+ * или фокусу, и блок расширяется до читаемой ширины — иначе двухмесячная
+ * работа занимала бы несколько десятков пикселей и текст обрезался бы.
  */
 export default function ExperienceTimeline({
   items,
@@ -46,8 +46,8 @@ export default function ExperienceTimeline({
 
       {items.map((item, index) => {
         const span = spans[index];
-        const period =
-          item.end === null ? `${item.period.split('—')[0]?.trim()} — ${nowLabel}` : item.period;
+        const isCurrent = item.end === null;
+        const period = isCurrent ? `${item.period.split('—')[0]?.trim()} — ${nowLabel}` : item.period;
 
         return (
           <div className="lane" key={`${item.company}-${item.start}`} data-reveal="up">
@@ -57,34 +57,43 @@ export default function ExperienceTimeline({
             </div>
 
             <div className="lane__track">
-              <div
-                className={`lane__bar${BAR_MODIFIER[item.kind]}`}
-                title={period}
-                aria-hidden="true"
+              {/*
+                Блок стоит на шкале по своим долям, поэтому у короткой работы
+                он всего несколько десятков пикселей. Текст лежит внутри, но
+                скрыт: раскрывается по наведению и по фокусу с клавиатуры,
+                а блок при этом расширяется до читаемой ширины.
+
+                tabIndex делает блок достижимым с клавиатуры; сам текст
+                остаётся в DOM, поэтому скринридер читает его всегда.
+              */}
+              <article
+                className={`lane__block${BAR_MODIFIER[item.kind]}`}
+                tabIndex={0}
                 style={
                   {
                     left: `${span?.left ?? 0}%`,
                     width: `${span?.width ?? 100}%`,
                   } as CSSProperties
                 }
-              />
-
-              <article className="lane__card">
+              >
                 <p className="lane__period">
-                  {item.end === null ? (
+                  {isCurrent ? (
                     <>
                       {item.period.split('—')[0]?.trim()} — <span className="lane__now">{nowLabel}</span>
                     </>
                   ) : (
-                    item.period
+                    period
                   )}
                 </p>
-                <p className="lane__summary">{item.summary}</p>
-                <ul className="lane__bullets">
-                  {item.bullets.slice(0, 3).map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
-                  ))}
-                </ul>
+
+                <div className="lane__body">
+                  <p className="lane__summary">{item.summary}</p>
+                  <ul className="lane__bullets">
+                    {item.bullets.slice(0, 3).map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
               </article>
             </div>
           </div>

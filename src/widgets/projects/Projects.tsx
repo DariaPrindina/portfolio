@@ -26,13 +26,13 @@ export default function Projects({ locale = 'ru' }: { locale?: Locale }) {
   );
 
   return (
-    <section id={SECTION_IDS.projects} className="section" data-reveal="up">
+    <section id={SECTION_IDS.projects} className="section">
       <p className="section__label">{dict.label}</p>
-      <h2 className="section__title" data-reveal="up">
+      <h2 className="section__title">
         {dict.title}
       </h2>
 
-      <div className="project-filters" role="group" aria-label={dict.filterAria} data-reveal="up">
+      <div className="project-filters" role="group" aria-label={dict.filterAria}>
         {filters.map((filter) => {
           const isActive = activeFilter === filter;
           const label = filter === 'all' ? dict.filterAll : dict.categories[filter];

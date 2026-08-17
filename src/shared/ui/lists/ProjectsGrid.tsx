@@ -37,7 +37,7 @@ export default function ProjectsGrid({ projects, labels, basePath = '' }: Projec
   return (
     <div className="project-lanes">
       {lanes.map((lane) => (
-        <div className="plane" key={lane.category} data-reveal="up">
+        <div className="plane" key={lane.category}>
           <p className="plane__label">{labels.categories[lane.category]}</p>
           <div className="plane__track">
             {lane.items.map((project) => (

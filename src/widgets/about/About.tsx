@@ -5,9 +5,9 @@ export default function About({ locale = 'ru' }: { locale?: Locale }) {
   const { about } = getContent(locale);
 
   return (
-    <section id={SECTION_IDS.about} className="section" data-reveal="up">
+    <section id={SECTION_IDS.about} className="section">
       <p className="section__label">{about.label}</p>
-      <h2 className="section__title" data-reveal="up">
+      <h2 className="section__title">
         {about.title}
       </h2>
 
@@ -15,7 +15,7 @@ export default function About({ locale = 'ru' }: { locale?: Locale }) {
         Знаки «−» и «+» несут смысл сами по себе, а подписи для скринридеров
         дублируют его текстом — цвет здесь не единственный носитель информации.
       */}
-      <div className="about__diff" data-reveal="up">
+      <div className="about__diff">
         {about.migration.map((row) => (
           <p key={row.text} className={`about__row about__row--${row.kind}`}>
             <span className="about__sign" aria-hidden="true">
@@ -29,7 +29,7 @@ export default function About({ locale = 'ru' }: { locale?: Locale }) {
         ))}
       </div>
 
-      <ul className="about__points" data-reveal="up">
+      <ul className="about__points">
         {about.points.map((point) => (
           <li key={point}>{point}</li>
         ))}

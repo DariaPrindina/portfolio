@@ -12,13 +12,13 @@ export default function ResumeSection({ locale = 'ru' }: { locale?: Locale }) {
   ];
 
   return (
-    <section id={SECTION_IDS.resume} className="section" data-reveal="up">
+    <section id={SECTION_IDS.resume} className="section">
       <p className="section__label">{resume.label}</p>
-      <h2 className="section__title" data-reveal="up">
+      <h2 className="section__title">
         {resume.title}
       </h2>
 
-      <div className="docs" data-reveal="up">
+      <div className="docs">
         {documents.map((doc) => (
           <Link
             key={doc.href}
@@ -34,7 +34,7 @@ export default function ResumeSection({ locale = 'ru' }: { locale?: Locale }) {
         ))}
       </div>
 
-      <div className="resume__actions" data-reveal="up">
+      <div className="resume__actions">
         <Link href={resume.pageHref} className="btn btn--primary">
           {resume.page}
         </Link>

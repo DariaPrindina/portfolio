@@ -27,20 +27,20 @@ export default function EnResumePage() {
     <>
       <MotionEffects />
       <div className="container">
-        <section className="section resume-page" data-reveal="up">
+        <section className="section resume-page">
           <div className="project-detail__top">
             <Link href="/en#resume" className="project-detail__back">
               Back to portfolio
             </Link>
           </div>
-          <h1 className="project-detail__title" data-reveal="up">
+          <h1 className="project-detail__title">
             Resume
           </h1>
-          <p className="project-detail__description" data-reveal="up">
+          <p className="project-detail__description">
             Open the latest CV in full size and download all documents from one page.
           </p>
 
-          <div className="resume__actions" data-reveal="up">
+          <div className="resume__actions">
             <Link
               href={resumeDocs.pdf}
               target="_blank"
@@ -60,7 +60,7 @@ export default function EnResumePage() {
             </Link>
           </div>
 
-          <div className="resume__viewer" data-reveal="up">
+          <div className="resume__viewer">
             <iframe src={`${resumeDocs.pdf}#view=FitH`} title="Resume PDF" loading="lazy" />
           </div>
         </section>

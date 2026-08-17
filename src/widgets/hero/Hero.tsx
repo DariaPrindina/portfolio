@@ -8,22 +8,22 @@ export default function Hero({ locale = 'ru' }: { locale?: Locale }) {
   const { profile, hero } = getContent(locale);
 
   return (
-    <section id={SECTION_IDS.hero} className="hero" data-reveal="up">
+    <section id={SECTION_IDS.hero} className="hero">
       <div className="hero__grid">
         <div className="hero__main">
-      <p className="hero__role" data-reveal="up">
+      <p className="hero__role">
         <span>const</span> role = <span>&apos;</span>
         {profile.role}
         <span>&apos;</span>
       </p>
-      <h1 className="hero__title" data-reveal="up">
+      <h1 className="hero__title">
         {profile.name}
       </h1>
-      <p className="hero__description" data-reveal="up">
+      <p className="hero__description">
         {profile.tagline}
       </p>
 
-      <div className="hero__actions" data-reveal="up">
+      <div className="hero__actions">
         <a href="#projects" className="btn btn--primary">
           {hero.actions.projects}
           <ArrowRight size={15} aria-hidden="true" />
@@ -39,7 +39,7 @@ export default function Hero({ locale = 'ru' }: { locale?: Locale }) {
         </a>
       </div>
 
-      <ul className="social-list" aria-label={hero.socialAria} data-reveal="up">
+      <ul className="social-list" aria-label={hero.socialAria}>
         <li>
           <Link
             href={profile.github}
@@ -69,7 +69,7 @@ export default function Hero({ locale = 'ru' }: { locale?: Locale }) {
         </li>
       </ul>
 
-      <div className="hero__facts" data-reveal="up">
+      <div className="hero__facts">
         {hero.facts.map((fact) => (
           <article key={fact.label} className="hero__fact">
             <p className="hero__fact-label">{fact.label}</p>
@@ -82,7 +82,7 @@ export default function Hero({ locale = 'ru' }: { locale?: Locale }) {
 
         {/* Орбиты — тонкая геометрия, а не свечение: так они попадают
             в тот же язык, что шкала времени и рамки панелей. */}
-        <div className="hero__portrait" data-reveal="zoom">
+        <div className="hero__portrait">
           <span className="hero__orbit hero__orbit--outer" aria-hidden="true" />
           <span className="hero__orbit hero__orbit--inner" aria-hidden="true" />
           <span className="hero__avatar-ring">

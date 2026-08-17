@@ -6,16 +6,16 @@ export default function Contact({ locale = 'ru' }: { locale?: Locale }) {
   const { profile, contact } = getContent(locale);
 
   return (
-    <section id={SECTION_IDS.contact} className="section" data-reveal="up">
+    <section id={SECTION_IDS.contact} className="section">
       <p className="section__label">{contact.label}</p>
-      <h2 className="section__title" data-reveal="up">
+      <h2 className="section__title">
         {contact.title}
       </h2>
-      <p className="prose contact__text" data-reveal="up">
+      <p className="prose contact__text">
         {contact.text}
       </p>
 
-      <div className="contact__actions" data-reveal="up">
+      <div className="contact__actions">
         <Link href={`mailto:${profile.email}`} className="btn btn--primary">
           {profile.email}
         </Link>

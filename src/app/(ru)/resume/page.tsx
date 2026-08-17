@@ -26,20 +26,20 @@ export default function ResumePage() {
     <>
       <MotionEffects />
       <div className="container">
-        <section className="section resume-page" data-reveal="up">
+        <section className="section resume-page">
           <div className="project-detail__top">
             <Link href="/#resume" className="project-detail__back">
               Назад на главную
             </Link>
           </div>
-          <h1 className="project-detail__title" data-reveal="up">
+          <h1 className="project-detail__title">
             Резюме
           </h1>
-          <p className="project-detail__description" data-reveal="up">
+          <p className="project-detail__description">
             Здесь можно посмотреть актуальное резюме и скачать документы в нужном формате.
           </p>
 
-          <div className="resume__actions" data-reveal="up">
+          <div className="resume__actions">
             <Link
               href={resumeDocs.pdf}
               target="_blank"
@@ -59,7 +59,7 @@ export default function ResumePage() {
             </Link>
           </div>
 
-          <div className="resume__viewer" data-reveal="up">
+          <div className="resume__viewer">
             <iframe src={`${resumeDocs.pdf}#view=FitH`} title="Резюме PDF" loading="lazy" />
           </div>
         </section>

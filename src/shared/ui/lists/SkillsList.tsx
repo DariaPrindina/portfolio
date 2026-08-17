@@ -9,7 +9,7 @@ export default function SkillsList({ groups }: SkillsListProps) {
   return (
     <div className="skills__groups">
       {groups.map((group) => (
-        <article key={group.id} className={`skills__group skills__group--${group.id}`} data-reveal="up">
+        <article key={group.id} className={`skills__group skills__group--${group.id}`}>
           <h3 className="skills__group-title">{group.title}</h3>
           <ul className="skills__list">
             {group.items.map((item) => {

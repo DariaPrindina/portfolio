@@ -7,13 +7,13 @@ export default function Education({ locale = 'ru' }: { locale?: Locale }) {
   const { education } = getContent(locale);
 
   return (
-    <section id={SECTION_IDS.education} className="section" data-reveal="up">
+    <section id={SECTION_IDS.education} className="section">
       <p className="section__label">{education.label}</p>
-      <h2 className="section__title" data-reveal="up">
+      <h2 className="section__title">
         {education.title}
       </h2>
 
-      <div className="edu" data-reveal="up">
+      <div className="edu">
         {education.items.map((item) => (
           <div className="edu__row" key={`${item.degree}-${item.year}`}>
             <span className="edu__year">{item.year}</span>

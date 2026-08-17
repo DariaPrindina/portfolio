@@ -50,7 +50,7 @@ export default function ExperienceTimeline({
         const period = isCurrent ? `${item.period.split('—')[0]?.trim()} — ${nowLabel}` : item.period;
 
         return (
-          <div className="lane" key={`${item.company}-${item.start}`} data-reveal="up">
+          <div className="lane" key={`${item.company}-${item.start}`}>
             <div className="lane__label">
               <p className="lane__company">{item.company}</p>
               <p className="lane__role">{item.role}</p>

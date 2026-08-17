@@ -7,9 +7,9 @@ export default function Experience({ locale = 'ru' }: { locale?: Locale }) {
   const { experience } = getContent(locale);
 
   return (
-    <section id={SECTION_IDS.experience} className="section" data-reveal="up">
+    <section id={SECTION_IDS.experience} className="section">
       <p className="section__label">{experience.label}</p>
-      <h2 className="section__title" data-reveal="up">
+      <h2 className="section__title">
         {experience.title}
       </h2>
       <ExperienceTimeline

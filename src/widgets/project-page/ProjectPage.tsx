@@ -43,7 +43,7 @@ export default function ProjectPage({ project, labels, lang }: ProjectPageProps)
       />
       <MotionEffects />
       <div className="container">
-        <section className="section project-detail" data-reveal="up">
+        <section className="section project-detail">
           <div className="project-detail__top">
             <Link href={labels.backHref} className="project-detail__back">
               <ArrowLeft size={14} aria-hidden="true" />
@@ -52,28 +52,28 @@ export default function ProjectPage({ project, labels, lang }: ProjectPageProps)
             {project.isCurrent ? <span className="project-badge">{labels.current}</span> : null}
           </div>
 
-          <h1 className="project-detail__title" data-reveal="up">
+          <h1 className="project-detail__title">
             {project.title}
           </h1>
-          <p className="project-detail__description" data-reveal="up">
+          <p className="project-detail__description">
             {project.longDescription}
           </p>
 
-          <ul className="stack-list" aria-label={`${labels.stackAria} ${project.title}`} data-reveal="up">
+          <ul className="stack-list" aria-label={`${labels.stackAria} ${project.title}`}>
             {project.stack.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
 
           {project.highlights?.length ? (
-            <ul className="highlights" data-reveal="up">
+            <ul className="highlights">
               {project.highlights.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           ) : null}
 
-          <div className="pblock__actions" data-reveal="up">
+          <div className="pblock__actions">
             {project.liveUrl ? (
               <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="btn">
                 <ExternalLink size={14} aria-hidden="true" />
@@ -90,17 +90,17 @@ export default function ProjectPage({ project, labels, lang }: ProjectPageProps)
         </section>
 
         {project.caseStudy ? (
-          <section className="section" data-reveal="up">
+          <section className="section">
             <p className="section__label">case study</p>
-            <h2 className="section__title" data-reveal="up">
+            <h2 className="section__title">
               {labels.caseStudy}
             </h2>
-            <p className="case-study__context" data-reveal="up">
+            <p className="case-study__context">
               {project.caseStudy.context}
             </p>
 
             <div className="case-study__grid">
-              <article className="case-study__block case-study__block--challenge" data-reveal="up">
+              <article className="case-study__block case-study__block--challenge">
                 <h3>{labels.challenge}</h3>
                 <ul>
                   {project.caseStudy.challenge.map((item) => (
@@ -108,7 +108,7 @@ export default function ProjectPage({ project, labels, lang }: ProjectPageProps)
                   ))}
                 </ul>
               </article>
-              <article className="case-study__block case-study__block--solution" data-reveal="up">
+              <article className="case-study__block case-study__block--solution">
                 <h3>{labels.solution}</h3>
                 <ul>
                   {project.caseStudy.solution.map((item) => (
@@ -118,7 +118,7 @@ export default function ProjectPage({ project, labels, lang }: ProjectPageProps)
               </article>
             </div>
 
-            <div className="case-study__impact" data-reveal="up">
+            <div className="case-study__impact">
               {project.caseStudy.impact.map((metric) => (
                 <article key={metric.label} className="case-study__metric">
                   <p className="case-study__metric-label">{metric.label}</p>
@@ -129,9 +129,9 @@ export default function ProjectPage({ project, labels, lang }: ProjectPageProps)
           </section>
         ) : null}
 
-        <section className="section project-showcase" data-reveal="up">
+        <section className="section project-showcase">
           <div className="project-showcase__grid">
-            <article className="showcase-window" data-reveal="up">
+            <article className="showcase-window">
               <header className="showcase-window__header">
                 <span className="showcase-window__dot" aria-hidden="true" />
                 {project.codeTitle}
@@ -141,7 +141,7 @@ export default function ProjectPage({ project, labels, lang }: ProjectPageProps)
               </pre>
             </article>
 
-            <article className="showcase-window" data-reveal="up">
+            <article className="showcase-window">
               <header className="showcase-window__header">
                 <span className="showcase-window__dot" aria-hidden="true" />
                 {labels.previewWindow}

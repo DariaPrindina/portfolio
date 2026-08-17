@@ -9,19 +9,19 @@ export default async function GithubStats({ locale = 'ru' }: { locale?: Locale }
   const numberFormatter = new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'ru-RU');
 
   return (
-    <section id={SECTION_IDS.github} className="section" data-reveal="up">
+    <section id={SECTION_IDS.github} className="section">
       <p className="section__label">{github.label}</p>
-      <h2 className="section__title" data-reveal="up">
+      <h2 className="section__title">
         {github.title}
       </h2>
 
       {!stats ? (
-        <p className="github__fallback" data-reveal="up">
+        <p className="github__fallback">
           {github.fallback}
         </p>
       ) : (
         <>
-          <div className="github__kpi" data-reveal="up">
+          <div className="github__kpi">
             <article className="github__kpi-item">
               <p className="github__kpi-label">{github.repos}</p>
               <p className="github__kpi-value">{numberFormatter.format(stats.publicRepos)}</p>
@@ -36,7 +36,7 @@ export default async function GithubStats({ locale = 'ru' }: { locale?: Locale }
             </article>
           </div>
 
-          <div className="github__repos" data-reveal="up">
+          <div className="github__repos">
             {stats.topRepos.map((repo) => (
               <Link
                 key={repo.url}

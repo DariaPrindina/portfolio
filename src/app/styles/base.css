@@ -51,9 +51,49 @@ a {
 }
 
 .section {
+  position: relative;
   padding: 2.8rem 0;
   border-top: 1px solid var(--line);
   scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+/*
+ * Вместо появления блоков по прокрутке — линия, которая прочерчивается
+ * по верху секции.
+ *
+ * Разница принципиальная: прежний эффект срабатывал один раз и до этого
+ * держал контент в opacity 0, то есть без JS страница была пустой.
+ * Здесь анимация привязана к позиции прокрутки, обратима и ничего не
+ * скрывает — текст читается всегда, даже если эффект не поддерживается.
+ */
+.section::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--violet) 70%, transparent);
+  transform-origin: 0 50%;
+  /* Базовое состояние — линия не нарисована. Под ней остаётся обычная
+     граница секции, поэтому при отсутствии поддержки ничего не ломается. */
+  transform: scaleX(0);
+}
+
+@supports (animation-timeline: view()) {
+  .section::before {
+    animation: drawEdge linear both;
+    animation-timeline: view();
+    /* cover предсказуем и для коротких секций, и для тех, что выше экрана:
+       отсчёт идёт от момента, когда секция появилась, до 30% её прохода. */
+    animation-range: cover 0% cover 30%;
+  }
+}
+
+@keyframes drawEdge {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .section:first-child {
@@ -127,29 +167,17 @@ a {
   pointer-events: none;
 }
 
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 520ms ease, transform 520ms ease;
-  transition-delay: var(--reveal-delay, 0ms);
-}
-
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  [data-reveal],
-  [data-reveal].is-visible {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .section::before {
+    animation: none;
+    transform: scaleX(1);
+    opacity: 0.4;
   }
+
 }
 
 /* Текст только для скринридеров. */

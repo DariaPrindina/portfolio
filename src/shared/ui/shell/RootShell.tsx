@@ -57,13 +57,6 @@ export default function RootShell({ lang, children }: { lang: 'ru' | 'en'; child
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/*
-          Без JavaScript обработчик появления не отработает, и страница
-          осталась бы пустой: [data-reveal] стартует с opacity 0.
-        */}
-        <noscript>
-          <style>{'[data-reveal]{opacity:1 !important;transform:none !important}'}</style>
-        </noscript>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <StarField />
           <a className="skip-link" href="#content">

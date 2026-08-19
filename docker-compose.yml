@@ -1,6 +1,9 @@
 services:
   app:
-    build: .
+    # Готовый образ собирается в GitHub Actions и скачивается сюда.
+    # На сервере 2 ГБ памяти и восемь контейнеров — сборка Next.js
+    # уходила в своп и вставала.
+    image: ghcr.io/dariaprindina/portfolio:latest
     restart: always
     mem_limit: 256m
     memswap_limit: 512m

@@ -118,6 +118,10 @@ jobs:
 
       - name: Send Telegram Notification
         if: always()
+        # Уведомление не должно решать судьбу деплоя. С недействительным
+        # токеном успешная выкатка отмечалась упавшей — по красному крестику
+        # нельзя было понять, сломан сайт или всего лишь бот.
+        continue-on-error: true
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}

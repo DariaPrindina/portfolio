@@ -14,6 +14,12 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=3000
+# Docker сам выставляет HOSTNAME в идентификатор контейнера, а server.js
+# из standalone-сборки берёт адрес привязки именно оттуда. Без этой строки
+# сервер слушает только адрес eth0: снаружи через проброс порта всё
+# работает, а изнутри 127.0.0.1 отвечает "connection refused", из-за чего
+# healthcheck считал живой контейнер мёртвым.
+ENV HOSTNAME=0.0.0.0
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs

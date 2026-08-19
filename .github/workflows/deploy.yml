@@ -82,6 +82,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Из коммита нужен только заголовок: тело бывает многострочным
+      # и превращает уведомление в простыню.
+      - name: Collect commit info
+        id: info
+        run: |
+          {
+            echo "title=$(git log -1 --pretty=%s)"
+            echo "sha=$(git rev-parse --short HEAD)"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         id: deploy
@@ -118,21 +128,18 @@ jobs:
 
       - name: Send Telegram Notification
         if: always()
-        # Уведомление не должно решать судьбу деплоя. С недействительным
-        # токеном успешная выкатка отмечалась упавшей — по красному крестику
-        # нельзя было понять, сломан сайт или всего лишь бот.
+        # Сломанное уведомление не должно выдавать успешный деплой за провал.
         continue-on-error: true
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
-            🚀 Деплой на dariaprindina.ru завершён!
+            ${{ job.status == 'success' && '🛰 Вышли на орбиту' || '💥 Не долетели' }}
 
-            Статус: ${{ job.status == 'success' && '✅ УСПЕШНО' || '❌ ОШИБКА' }}
-            Время: ${{ github.event.head_commit.timestamp }}
-            Коммит: ${{ github.event.head_commit.message }}
-            Автор: ${{ github.actor }}
-            Ссылка: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+            ${{ steps.info.outputs.title }}
+
+            🔭 ${{ steps.info.outputs.sha }} · ${{ github.actor }}
+            ${{ job.status == 'success' && '🌍 https://dariaprindina.ru' || '🧯 Сайт остался на прежней версии' }}
 
             Логи: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}

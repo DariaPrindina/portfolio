@@ -9,7 +9,6 @@ const WIDGET_FILES: Record<SectionKey, string> = {
   experience: 'src/widgets/experience/Experience.tsx',
   education: 'src/widgets/education/Education.tsx',
   projects: 'src/widgets/projects/Projects.tsx',
-  github: 'src/widgets/github-stats/GithubStats.tsx',
   resume: 'src/widgets/resume-section/ResumeSection.tsx',
   contact: 'src/widgets/contact/Contact.tsx',
 };

@@ -12,7 +12,6 @@ export const SECTION_IDS = {
   experience: 'experience',
   education: 'education',
   projects: 'projects',
-  github: 'github',
   resume: 'resume',
   contact: 'contact',
 } as const;

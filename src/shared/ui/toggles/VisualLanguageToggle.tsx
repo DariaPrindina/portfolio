@@ -11,7 +11,7 @@ export default function VisualLanguageToggle() {
 
   return (
     <Link href={href} className="visual-language-toggle" aria-label={title} title={title}>
-      <Languages size={17} aria-hidden="true" />
+      <Languages size={16} aria-hidden="true" />
       <span className="visual-language-toggle__label">{label}</span>
     </Link>
   );

@@ -3,7 +3,6 @@ import About from '@/widgets/about/About';
 import Contact from '@/widgets/contact/Contact';
 import Education from '@/widgets/education/Education';
 import Experience from '@/widgets/experience/Experience';
-import GithubStats from '@/widgets/github-stats/GithubStats';
 import Hero from '@/widgets/hero/Hero';
 import MotionEffects from '@/shared/ui/motion/MotionEffects';
 import Projects from '@/widgets/projects/Projects';
@@ -40,7 +39,6 @@ export default function EnPage() {
         <Experience locale="en" />
         <Education locale="en" />
         <Projects locale="en" />
-        <GithubStats locale="en" />
         <ResumeSection locale="en" />
         <Contact locale="en" />
       </div>

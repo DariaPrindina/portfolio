@@ -13,7 +13,7 @@ export const skills: Skill[] = [
   { name: 'React Hook Form', logo: 'https://cdn.simpleicons.org/reacthookform/EC5990' },
   { name: 'React Router', logo: 'https://cdn.simpleicons.org/reactrouter/CA4245' },
   { name: 'Vitest', logo: 'https://cdn.simpleicons.org/vitest/6E9F18' },
-  { name: 'Playwright', logo: 'https://cdn.simpleicons.org/playwright/2EAD33' },
+  { name: 'Playwright', logo: '/images/skills/playwright.svg' },
   { name: 'Storybook', logo: 'https://cdn.simpleicons.org/storybook/FF4785' },
   { name: 'Lodash', logo: 'https://cdn.simpleicons.org/lodash/3492FF' },
   { name: 'Next.js', logo: 'https://cdn.simpleicons.org/nextdotjs/8FA8FF' },
@@ -58,6 +58,19 @@ export const skillGroups: SkillGroup[] = [
   },
 ];
 
+/**
+ * В группах названия подписаны так, как они звучат в работе, а в списке
+ * логотипов — так, как называется сам значок. Без этой таблицы
+ * «React 19» и «TanStack Query» оставались без иконок.
+ */
+const LOGO_ALIASES: Record<string, string> = {
+  'React 19': 'React',
+  'React 18': 'React',
+  'TanStack Query': 'React Query',
+  'CSS': 'CSS3',
+};
+
 export function findSkillLogo(name: string) {
-  return skills.find((skill) => skill.name === name)?.logo;
+  const key = LOGO_ALIASES[name] ?? name;
+  return skills.find((skill) => skill.name === key)?.logo;
 }

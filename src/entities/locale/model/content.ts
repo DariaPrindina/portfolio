@@ -67,15 +67,6 @@ export const content = {
       categories: projectCategoryLabels,
       grid: { currentProject: 'текущий', details: 'Подробнее', demo: 'Открыть сайт', code: 'Код' },
     },
-    github: {
-      label: 'github',
-      title: 'Публичный код',
-      repos: 'Репозиториев',
-      followers: 'Подписчиков',
-      stars: 'Звёзд',
-      forks: 'форков',
-      fallback: 'Не удалось загрузить данные GitHub API. Попробуйте обновить страницу позже.',
-    },
     resume: {
       label: 'резюме',
       title: 'Документы',
@@ -142,15 +133,6 @@ export const content = {
       filterAria: 'Project filter',
       categories: { commercial: 'commercial', pet: 'side projects', team: 'team and study' },
       grid: { currentProject: 'current', details: 'Case study', demo: 'Open site', code: 'Code' },
-    },
-    github: {
-      label: 'github',
-      title: 'Public code',
-      repos: 'Repositories',
-      followers: 'Followers',
-      stars: 'Stars',
-      forks: 'forks',
-      fallback: 'Could not load GitHub API data. Please try again later.',
     },
     resume: {
       label: 'resume',

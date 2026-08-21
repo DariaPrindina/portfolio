@@ -19,8 +19,8 @@ export default function VisualThemeToggle() {
       aria-label="Переключить тему"
       title="Переключить тему"
     >
-      <Moon size={15} aria-hidden="true" className="theme-icon theme-icon--light" />
-      <Sun size={15} aria-hidden="true" className="theme-icon theme-icon--dark" />
+      <Moon size={16} aria-hidden="true" className="theme-icon theme-icon--light" />
+      <Sun size={16} aria-hidden="true" className="theme-icon theme-icon--dark" />
       <span className="visual-theme-toggle__label" aria-hidden="true">
         <span className="theme-icon--light">dark</span>
         <span className="theme-icon--dark">light</span>

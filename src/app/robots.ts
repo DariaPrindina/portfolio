@@ -1,6 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/shared/config/site';
 
+// Файл собирается при билде: на GitHub Pages нет сервера.
+export const dynamic = 'force-static';
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [

@@ -1,6 +1,7 @@
 import { ImageResponse } from 'next/og';
 
-export const runtime = 'edge';
+// Картинка рисуется один раз при сборке: на GitHub Pages нет сервера.
+export const dynamic = 'force-static';
 export const alt = 'Daria Prindina — Frontend Developer';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';

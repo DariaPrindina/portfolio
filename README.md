@@ -76,6 +76,15 @@ curl -s http://localhost:3000/opengraph-image-35zkfg -o public/images/og-preview
 
 ## Деплой
 
-Push в `main` запускает GitHub Actions: сначала проверки, затем деплой по SSH
-на VDS, где приложение поднимается через Docker Compose с потолком в 256 МБ
-памяти.
+Сайт хостится на GitHub Pages под доменом `dariaprindina.ru`. Push в `main`
+запускает GitHub Actions: проверки, тесты, статический экспорт Next.js в `out/`
+и публикацию на Pages.
+
+Сервера у сайта нет, поэтому серверные возможности Next.js недоступны:
+API-маршруты, middleware, оптимизация `next/image` и рендер по запросу. Новые
+динамические страницы должны отдавать свой список путей через
+`generateStaticParams`.
+
+DNS домена в Cloudflare: четыре записи `A` на адреса GitHub Pages и `CNAME`
+для `www`, все в режиме DNS only. Если включить прокси, GitHub перестанет
+продлевать HTTPS-сертификат.

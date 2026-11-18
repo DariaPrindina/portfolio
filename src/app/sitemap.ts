@@ -2,6 +2,9 @@ import type { MetadataRoute } from 'next';
 import { projects } from '@/entities/project/model/projects';
 import { SITE_URL } from '@/shared/config/site';
 
+// Файл собирается при билде: на GitHub Pages нет сервера.
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
